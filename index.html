@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ChainSentinel | 风险分析工作台</title>
+<script src="https://modao.cc/agent-py/static/source/js/tailwindcss.3.4.3.js"></script>
+<script src="https://modao.cc/agent-py/static/source/js/iconify-icon.min.1.0.7.js"></script>
+<script src="https://modao.cc/agent-py/static/source/js/echarts.min.5.4.3.js"></script>
+<style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #020617;
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(51, 65, 85, 0.5);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            color: #94a3b8;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .sidebar-item:hover, .sidebar-item.active {
+            background: rgba(59, 130, 246, 0.1);
+            color: #3b82f6;
+        }
+
+        .sidebar-item.active {
+            font-weight: 600;
+            border-right: 3px solid #3b82f6;
+            border-radius: 8px 0 0 8px;
+        }
+
+        .main-content {
+            margin-left: 260px;
+            width: calc(100% - 260px);
+            transition: all 0.3s;
+        }
+        
+        @media (max-width: 1280px) {
+            .main-content {
+                margin-left: 80px;
+                width: calc(100% - 80px);
+            }
+            .sidebar-text { display: none; }
+            .sidebar { width: 80px; }
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
+    </style>
+</head>
+<body class="flex min-h-screen">
+<!-- 左侧固定侧边栏 -->
+<aside class="sidebar fixed top-0 left-0 h-full w-[260px] bg-slate-950 border-r border-slate-800 z-[60] flex flex-col transition-all">
+<div class="p-6 flex items-center gap-3">
+<div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center shrink-0">
+<iconify-icon class="text-2xl text-white" icon="ph:shield-check-fill"></iconify-icon>
+</div>
+<div class="sidebar-text">
+<h1 class="text-lg font-bold tracking-tight text-white">ChainSentinel</h1>
+<p class="text-[10px] text-slate-500 uppercase tracking-widest leading-none">Intelligence v4.2</p>
+</div>
+</div>
+<nav class="flex-1 px-4 space-y-2 mt-4">
+<div class="text-[10px] font-bold text-slate-600 uppercase tracking-widest px-4 mb-2 sidebar-text">核心功能区</div>
+<a class="sidebar-item active" href="https://modao.cc/agent-py/workspace/69de3ed0066ad7c26f6ca60e/区块链监管平台_v2.html/index.html?render_html=true">
+<iconify-icon class="text-xl" icon="ph:squares-four"></iconify-icon>
+<span class="sidebar-text">风险工作台</span>
+</a>
+<a class="sidebar-item" href="https://modao.cc/agent-py/workspace/69de3ed0066ad7c26f6ca60e/区块链监管平台_v2.html/monitoring.html?render_html=true">
+<iconify-icon class="text-xl" icon="ph:eye"></iconify-icon>
+<span class="sidebar-text">监控中心</span>
+</a>
+<a class="sidebar-item" href="https://modao.cc/agent-py/workspace/69de3ed0066ad7c26f6ca60e/区块链监管平台_v2.html/区块链风险监管平台.html?render_html=true">
+<iconify-icon class="text-xl" icon="ph:share-network"></iconify-icon>
+<span class="sidebar-text">溯源分析系统</span>
+</a>
+<a class="sidebar-item" href="https://modao.cc/agent-py/workspace/69de3ed0066ad7c26f6ca60e/区块链监管平台_v2.html/report.html?render_html=true">
+<iconify-icon class="text-xl" icon="ph:file-text"></iconify-icon>
+<span class="sidebar-text">分析报告</span>
+</a>
+<div class="pt-6 text-[10px] font-bold text-slate-600 uppercase tracking-widest px-4 mb-2 sidebar-text">高级配置</div>
+<a class="sidebar-item" href="#">
+<iconify-icon class="text-xl" icon="ph:database"></iconify-icon>
+<span class="sidebar-text">标签画像库</span>
+</a>
+<a class="sidebar-item" href="#">
+<iconify-icon class="text-xl" icon="ph:gear-six"></iconify-icon>
+<span class="sidebar-text">系统参数</span>
+</a>
+</nav>
+<div class="p-6 border-t border-slate-900 flex items-center gap-3">
+<img alt="User" class="w-10 h-10 rounded-full border border-slate-800" src="/agent-py/static/source/images/placeholder.svg"/>
+<div class="sidebar-text">
+<p class="text-xs font-bold text-white">王建国</p>
+<p class="text-[10px] text-emerald-500">在线活跃 (2026-04-14)</p>
+</div>
+</div>
+</aside>
+<!-- 主内容区 -->
+<div class="main-content flex-1">
+<!-- 顶部导航 -->
+<header class="sticky top-0 z-50 w-full border-b border-slate-800 bg-slate-950/80 backdrop-blur-md px-8 h-16 flex items-center justify-between">
+<div class="flex-1 max-w-2xl">
+<div class="relative group">
+<iconify-icon class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-400 transition-colors" icon="ph:magnifying-glass"></iconify-icon>
+<input class="w-full bg-slate-900 border border-slate-700 rounded-full py-2 pl-12 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all" placeholder="输入地址、交易哈希、实体名称进行穿透分析..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2">
+<span class="text-xs text-slate-400">系统状态:</span>
+<div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+<span class="text-xs text-slate-200">稳定运行中</span>
+</div>
+<div class="h-6 w-[1px] bg-slate-800"></div>
+<div class="relative">
+<iconify-icon class="text-2xl text-slate-400 cursor-pointer hover:text-white" icon="ph:bell"></iconify-icon>
+<span class="absolute top-0 right-0 w-2 h-2 bg-rose-500 rounded-full border border-slate-950"></span>
+</div>
+</div>
+</header>
+<main class="p-8 space-y-8">
+<!-- 头部概览 -->
+<div class="flex items-end justify-between">
+<div>
+<h2 class="text-3xl font-bold text-white tracking-tight">风险分析工作台</h2>
+<p class="text-slate-400 mt-1">
+                        监管员 ID: <span class="text-blue-400 font-mono">#9527</span> | 
+                        当前日期: <span class="text-slate-200">2026-04-14</span>
+</p>
+</div>
+<div class="flex gap-3">
+<button class="bg-blue-600 hover:bg-blue-500 text-white font-bold px-6 py-2.5 rounded-xl transition-all shadow-lg shadow-blue-900/30 flex items-center gap-2">
+<iconify-icon icon="ph:lightning-fill"></iconify-icon> 启动穿透分析
+                    </button>
+</div>
+</div>
+<!-- 核心数据卡片 -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+<div class="glass-panel p-6 border-b-2 border-b-blue-500">
+<p class="text-slate-500 text-[10px] font-bold uppercase tracking-widest mb-2">今日分析总量</p>
+<h3 class="text-3xl font-bold text-white font-mono">1,429</h3>
+<p class="text-xs text-emerald-500 mt-2">+12.4% <span class="text-slate-600 ml-1">较昨日</span></p>
+</div>
+<div class="glass-panel p-6 border-b-2 border-b-rose-500">
+<p class="text-slate-500 text-[10px] font-bold uppercase tracking-widest mb-2">高危预警触发</p>
+<h3 class="text-3xl font-bold text-rose-500 font-mono">56</h3>
+<p class="text-xs text-rose-400 mt-2">12 待处理 <span class="text-slate-600 ml-1">紧急级别</span></p>
+</div>
+<div class="glass-panel p-6 border-b-2 border-b-amber-500">
+<p class="text-slate-500 text-[10px] font-bold uppercase tracking-widest mb-2">新增风险实体</p>
+<h3 class="text-3xl font-bold text-amber-500 font-mono">8</h3>
+<p class="text-xs text-slate-500 mt-2">已入库画像中心</p>
+</div>
+<div class="glass-panel p-6 border-b-2 border-b-purple-500">
+<p class="text-slate-500 text-[10px] font-bold uppercase tracking-widest mb-2">全网洗钱溯源</p>
+<h3 class="text-3xl font-bold text-white font-mono">$1.2B</h3>
+<p class="text-xs text-slate-500 mt-2">季度累计总额</p>
+</div>
+</div>
+<!-- 主布局区 -->
+<div class="grid grid-cols-12 gap-8">
+<!-- 左侧: 仪表盘与手法 -->
+<div class="col-span-12 xl:col-span-4 space-y-8">
+<div class="glass-panel p-6">
+<h4 class="font-bold text-lg mb-6 flex items-center gap-2">
+<iconify-icon class="text-rose-500" icon="ph:gauge-bold"></iconify-icon> 实时风险分值
+                        </h4>
+<div class="w-full h-64" id="gaugeChart"></div>
+<div class="mt-4 p-4 bg-rose-500/5 border border-rose-500/20 rounded-xl">
+<p class="text-[10px] text-rose-500 font-black uppercase mb-1">审计模型建议</p>
+<p class="text-sm text-slate-200 leading-relaxed">该地址具有显著的“分账-归集”洗钱特征。建议立即对关联账户实施 Tier-1 等级合规冻结，并同步下发穿透协查函。</p>
+</div>
+</div>
+<div class="glass-panel p-6">
+<h4 class="font-bold text-lg mb-4 flex items-center gap-2">
+<iconify-icon class="text-amber-500" icon="ph:fingerprint-bold"></iconify-icon> 异常手法匹配
+                        </h4>
+<div class="space-y-4">
+<div class="p-3 bg-slate-900/40 rounded-xl border border-slate-800 hover:border-blue-500/30 transition-all cursor-pointer">
+<div class="flex justify-between items-center mb-1">
+<span class="text-xs font-bold text-rose-500 bg-rose-500/10 px-2 py-0.5 rounded">多重混币循环</span>
+<span class="text-[10px] text-slate-500">0.98 Conf.</span>
+</div>
+<p class="text-xs text-slate-400">检测到 Tornado Cash 入金后跨链至 Polygon 的循环路径。</p>
+</div>
+<div class="p-3 bg-slate-900/40 rounded-xl border border-slate-800 hover:border-blue-500/30 transition-all cursor-pointer">
+<div class="flex justify-between items-center mb-1">
+<span class="text-xs font-bold text-blue-500 bg-blue-500/10 px-2 py-0.5 rounded">实体聚类关联</span>
+<span class="text-[10px] text-slate-500">0.85 Conf.</span>
+</div>
+<p class="text-xs text-slate-400">目标地址与 Lazarus 组织已知黑灰地址有二跳交易往来。</p>
+</div>
+</div>
+</div>
+</div>
+<!-- 右侧: 资金溯源图谱 -->
+<div class="col-span-12 xl:col-span-8">
+<div class="glass-panel h-full flex flex-col p-6">
+<div class="flex items-center justify-between mb-6">
+<div>
+<h4 class="font-bold text-lg flex items-center gap-2">
+<iconify-icon class="text-blue-400" icon="ph:tree-structure-bold"></iconify-icon> 十层深度资金流向穿透图
+                                </h4>
+<p class="text-xs text-slate-500 mt-1">2026-04-14 14:30 动态更新 | 自动识别 842 个关联节点</p>
+</div>
+<div class="flex gap-2">
+<button class="p-2 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-300 transition-colors"><iconify-icon icon="ph:magnifying-glass-plus"></iconify-icon></button>
+<button class="p-2 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-300 transition-colors"><iconify-icon icon="ph:share"></iconify-icon></button>
+</div>
+</div>
+<div class="flex-1 min-h-[500px]" id="mainGraph"></div>
+<div class="mt-4 flex items-center gap-6 text-[10px] text-slate-500 border-t border-slate-800 pt-4">
+<span class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span> 风险核心</span>
+<span class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span> 交易实体</span>
+<span class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> 已知机构</span>
+<div class="flex-1"></div>
+<span class="italic text-slate-600">双击节点展开更深层级 | 右键查看实体详细画像</span>
+</div>
+</div>
+</div>
+</div>
+<!-- 下方监控动态 -->
+<div class="glass-panel overflow-hidden">
+<div class="p-6 border-b border-slate-800 flex items-center justify-between">
+<h4 class="font-bold text-lg">全网持续监控实时动态</h4>
+<button class="text-sm text-blue-400 hover:underline">查看全部监控任务 »</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-slate-900/50 text-[10px] font-black uppercase text-slate-500 tracking-widest border-b border-slate-800">
+<tr>
+<th class="px-8 py-4">监控地址</th>
+<th class="px-8 py-4">风险类型</th>
+<th class="px-8 py-4">最新链上动作</th>
+<th class="px-8 py-4">时戳</th>
+<th class="px-8 py-4 text-right">管控操作</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-800/50 text-sm">
+<tr class="hover:bg-blue-500/5 transition-colors">
+<td class="px-8 py-4 font-mono text-xs text-blue-400">0x8a12...c90d</td>
+<td class="px-8 py-4"><span class="bg-rose-500/10 text-rose-500 px-2 py-1 rounded-md text-[10px] font-bold border border-rose-500/20">高危洗钱预警</span></td>
+<td class="px-8 py-4 text-slate-300">转出 120,000 USDT 至 Binance</td>
+<td class="px-8 py-4 text-xs text-slate-500">15:31:02</td>
+<td class="px-8 py-4 text-right">
+<button class="text-blue-500 hover:text-blue-400 font-bold text-xs mr-4">深度透视</button>
+<button class="text-rose-500 hover:text-rose-400 font-bold text-xs">执行拦截</button>
+</td>
+</tr>
+<tr class="hover:bg-blue-500/5 transition-colors">
+<td class="px-8 py-4 font-mono text-xs text-blue-400">bc1qj...4p2e</td>
+<td class="px-8 py-4"><span class="bg-amber-500/10 text-amber-500 px-2 py-1 rounded-md text-[10px] font-bold border border-amber-500/20">异常资产移动</span></td>
+<td class="px-8 py-4 text-slate-300">与混币池地址发生 2 笔交互</td>
+<td class="px-8 py-4 text-xs text-slate-500">15:28:45</td>
+<td class="px-8 py-4 text-right">
+<button class="text-blue-500 hover:text-blue-400 font-bold text-xs mr-4">深度透视</button>
+<button class="text-slate-500 hover:text-white font-bold text-xs">忽略预警</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</main>
+<footer class="p-8 border-t border-slate-900 opacity-50 text-center">
+<p class="text-[10px] uppercase tracking-widest">ChainSentinel 风险监管系统 v4.2 PRO | 2026-04-14 稳定运行</p>
+</footer>
+</div>
+<script>
+        window.onload = function() {
+            // 1. 风险仪表盘
+            const gauge = echarts.init(document.getElementById('gaugeChart'));
+            gauge.setOption({
+                series: [{
+                    type: 'gauge',
+                    startAngle: 180, endAngle: 0,
+                    radius: '100%', center: ['50%', '75%'],
+                    axisLine: { lineStyle: { width: 10, color: [[0.3, '#10b981'], [0.7, '#f59e0b'], [1, '#ef4444']] } },
+                    detail: { fontSize: 42, offsetCenter: [0, '0%'], formatter: '{value}', color: '#ef4444', fontWeight: 'bold' },
+                    data: [{ value: 92, name: '' }]
+                }]
+            });
+
+            // 2. 穿透图谱
+            const graph = echarts.init(document.getElementById('mainGraph'));
+            const nodes = [
+                { id: '0', name: '中心地址', symbolSize: 50, itemStyle: { color: '#ef4444' } },
+                { id: '1', name: 'Binance', symbolSize: 30, itemStyle: { color: '#3b82f6' } },
+                { id: '2', name: 'OKX_OTC', symbolSize: 30, itemStyle: { color: '#3b82f6' } },
+                { id: '3', name: 'Mixer_Pool', symbolSize: 35, itemStyle: { color: '#f59e0b' } },
+                { id: '4', name: 'Bridge_Hub', symbolSize: 25, itemStyle: { color: '#10b981' } }
+            ];
+            for (let i = 5; i < 40; i++) {
+                nodes.push({ id: 'n'+i, name: 'Addr_'+i, symbolSize: Math.random()*15+5, itemStyle: { color: '#475569' } });
+            }
+            const links = [
+                { source: '0', target: '1' }, { source: '0', target: '2' },
+                { source: '0', target: '3' }, { source: '3', target: '4' }
+            ];
+            for (let i = 5; i < 40; i++) {
+                links.push({ source: Math.floor(Math.random()*5).toString(), target: 'n'+i });
+            }
+            graph.setOption({
+                series: [{
+                    type: 'graph', layout: 'force', draggable: true,
+                    data: nodes, links: links,
+                    label: { show: false },
+                    force: { repulsion: 150, edgeLength: 80 },
+                    lineStyle: { color: 'rgba(51, 65, 85, 0.4)', width: 1, curveness: 0.1 }
+                }]
+            });
+
+            window.addEventListener('resize', () => { gauge.resize(); graph.resize(); });
+        }
+    </script>
+</body>
+</html>
