@@ -1,0 +1,78 @@
+{
+  "meta": {
+    "address": "0xa52e014bae8c7ce5a16de3e6a9e5a81fadf9e44d",
+    "analyzed_at": "2026-04-18T12:09:33.157278",
+    "hops": 1,
+    "engine_version": "1.0"
+  },
+  "risk": {
+    "address": "0xa52e014bae8c7ce5a16de3e6a9e5a81fadf9e44d",
+    "risk_level": "LOW",
+    "risk_score": 0,
+    "taint_rate": 0.0,
+    "triggered": [],
+    "summary": "LOW | 风险分 0/100 | 污染率 0.0% | 0 个手法命中"
+  },
+  "graph": {
+    "summary": {
+      "total_nodes": 0,
+      "total_edges": 0,
+      "blacklist_nodes": 0,
+      "mixer_nodes": 0,
+      "tokens_seen": [],
+      "blacklist_list": []
+    },
+    "json": {
+      "nodes": [],
+      "edges": [],
+      "stats": {
+        "total_nodes": 0,
+        "total_edges": 0,
+        "shown_nodes": 0,
+        "shown_edges": 0
+      }
+    }
+  },
+  "detectors": {
+    "blacklist": {
+      "detected": false
+    },
+    "peel_chain": {
+      "detected": false
+    },
+    "smurfing": {
+      "detected": false
+    },
+    "fanout": {
+      "detected": false
+    },
+    "bipartite": {
+      "detected": false
+    },
+    "mixer": {
+      "detected": false
+    },
+    "defi": {
+      "detected": false
+    },
+    "nft": {
+      "detected": false
+    },
+    "dusting": {
+      "detected": false
+    },
+    "pig_butchering": {
+      "detected": false
+    },
+    "reverse_taint": {
+      "detected": false
+    },
+    "pagerank": {
+      "detected": false
+    },
+    "lof": {
+      "detected": false
+    }
+  },
+  "tokens": {}
+}

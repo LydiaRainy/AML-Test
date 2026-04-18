@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ChainSentinel | 风险分析工作台</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+<style>
+:root {
+  --bg:      #020617; --bg2: #0f172a; --bg3: #1e293b;
+  --border:  rgba(51,65,85,0.5);
+  --text:    #e2e8f0; --muted: #94a3b8;
+  --blue:    #3b82f6; --rose: #ef4444;
+  --amber:   #f59e0b; --emerald: #10b981; --purple: #8b5cf6;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);display:flex;height:100vh;overflow:hidden}
+
+/* ── Sidebar ── */
+.sidebar{width:220px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column}
+.logo{padding:18px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border)}
+.logo-icon{width:32px;height:32px;background:var(--blue);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px}
+.logo h1{font-size:14px;font-weight:700;color:white}
+.logo p{font-size:9px;color:var(--muted);letter-spacing:.1em}
+nav{flex:1;padding:12px;overflow-y:auto}
+.nav-section{font-size:9px;font-weight:700;color:#334155;letter-spacing:.12em;text-transform:uppercase;padding:8px 8px 4px;margin-top:8px}
+.nav-item{display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:7px;color:var(--muted);font-size:12px;cursor:pointer;transition:all .2s;margin-bottom:2px;border:none;background:none;width:100%;text-align:left}
+.nav-item:hover{background:rgba(59,130,246,.1);color:var(--blue)}
+.nav-item.active{background:rgba(59,130,246,.12);color:var(--blue);font-weight:600}
+.sidebar-footer{padding:14px 16px;border-top:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.avatar{width:28px;height:28px;border-radius:50%;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--blue)}
+
+/* ── Main layout ── */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+header{flex-shrink:0;background:rgba(2,6,23,.9);border-bottom:1px solid var(--border);padding:0 20px;height:56px;display:flex;align-items:center;gap:12px}
+.search-wrap{flex:1;max-width:480px;position:relative}
+.search-wrap input{width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:7px 14px 7px 36px;font-size:12px;color:var(--text);outline:none;font-family:monospace;transition:border-color .2s}
+.search-wrap input:focus{border-color:var(--blue)}
+.search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:13px;pointer-events:none}
+.btn{border:none;border-radius:16px;padding:7px 16px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:5px;transition:all .2s}
+.btn-primary{background:var(--blue);color:white}
+.btn-primary:hover{background:#2563eb}
+.btn-sm{padding:5px 10px;font-size:11px;border-radius:10px}
+.btn-ghost{background:var(--bg3);color:var(--text);border:1px solid var(--border)}
+.btn-ghost:hover{border-color:var(--blue);color:var(--blue)}
+.status{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);margin-left:auto}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--emerald);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* ── Content area ── */
+.content{flex:1;display:flex;overflow:hidden}
+
+/* ── Left panel: address list ── */
+.addr-panel{width:280px;flex-shrink:0;border-right:1px solid var(--border);display:flex;flex-direction:column;background:var(--bg2)}
+.addr-panel-header{padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.addr-panel-header h3{font-size:13px;font-weight:600}
+.addr-toolbar{padding:10px 12px;border-bottom:1px solid var(--border);display:flex;gap:6px}
+.addr-input{flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:6px 10px;font-size:11px;color:var(--text);outline:none;font-family:monospace}
+.addr-input:focus{border-color:var(--blue)}
+.addr-list{flex:1;overflow-y:auto;padding:8px}
+.addr-card{padding:10px 12px;border-radius:8px;border:1px solid var(--border);margin-bottom:6px;cursor:pointer;transition:all .2s;position:relative}
+.addr-card:hover{border-color:rgba(59,130,246,.4)}
+.addr-card.selected{border-color:var(--blue);background:rgba(59,130,246,.08)}
+.addr-card.analyzing{border-color:var(--amber);animation:border-pulse 1.5s infinite}
+@keyframes border-pulse{0%,100%{border-color:var(--amber)}50%{border-color:rgba(245,158,11,.3)}}
+.addr-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px}
+.addr-hash{font-family:monospace;font-size:11px;color:var(--blue)}
+.addr-risk-badge{font-size:9px;font-weight:700;padding:2px 7px;border-radius:4px}
+.addr-meta{font-size:10px;color:var(--muted)}
+.addr-score-bar{height:2px;background:var(--bg3);border-radius:1px;margin-top:6px;overflow:hidden}
+.addr-score-fill{height:100%;border-radius:1px;transition:width .3s}
+.addr-delete{position:absolute;top:8px;right:8px;width:18px;height:18px;border-radius:4px;background:rgba(239,68,68,.1);border:none;color:var(--rose);font-size:10px;cursor:pointer;display:none;align-items:center;justify-content:center}
+.addr-card:hover .addr-delete{display:flex}
+.addr-empty{padding:40px 20px;text-align:center;color:var(--muted);font-size:12px;line-height:1.8}
+
+/* ── Right panel: detail ── */
+.detail-panel{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:16px}
+.detail-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:var(--muted)}
+.detail-empty .big-icon{font-size:48px;opacity:.3}
+
+/* ── Stats row ── */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:14px 16px;position:relative;overflow:hidden}
+.stat-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px}
+.stat-card.c-blue::after{background:var(--blue)}
+.stat-card.c-rose::after{background:var(--rose)}
+.stat-card.c-amber::after{background:var(--amber)}
+.stat-card.c-purple::after{background:var(--purple)}
+.stat-label{font-size:9px;font-weight:700;color:#475569;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+.stat-value{font-size:24px;font-weight:700;font-family:monospace}
+.stat-sub{font-size:10px;color:var(--muted);margin-top:4px}
+
+/* ── Panel card ── */
+.panel{background:var(--bg2);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.panel-head{padding:13px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.panel-title{font-size:13px;font-weight:600;display:flex;align-items:center;gap:7px}
+.panel-body{padding:16px}
+
+/* ── Analysis grid ── */
+.analysis-grid{display:grid;grid-template-columns:300px 1fr;gap:14px}
+
+/* ── Gauge ── */
+#gaugeChart{width:100%;height:200px}
+.audit-box{margin-top:12px;padding:12px;background:rgba(239,68,68,.05);border:1px solid rgba(239,68,68,.2);border-radius:8px}
+.audit-box .lbl{font-size:9px;font-weight:700;color:var(--rose);text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px}
+.audit-box p{font-size:11px;color:#cbd5e1;line-height:1.6}
+
+/* ── Method list ── */
+.method-list{display:flex;flex-direction:column;gap:8px}
+.method-item{padding:10px 12px;background:rgba(15,23,42,.6);border:1px solid var(--border);border-radius:8px}
+.method-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px}
+.m-badge{font-size:9px;font-weight:700;padding:2px 7px;border-radius:4px}
+.m-sev{font-size:9px;color:var(--muted)}
+.m-desc{font-size:11px;color:var(--muted);line-height:1.5}
+
+/* ── Graph ── */
+#mainGraph{width:100%;height:440px}
+.graph-legend{padding:10px 16px;border-top:1px solid var(--border);display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--muted)}
+.legend-dot{width:7px;height:7px;border-radius:50%}
+
+/* ── Monitor table ── */
+.mon-table{width:100%;border-collapse:collapse;font-size:11px}
+.mon-table th{padding:10px 14px;text-align:left;font-size:9px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.08em;background:rgba(15,23,42,.5);border-bottom:1px solid var(--border)}
+.mon-table td{padding:11px 14px;border-bottom:1px solid rgba(30,41,59,.5);vertical-align:middle}
+.mon-table tr:hover td{background:rgba(59,130,246,.03)}
+.mon-table tr:last-child td{border-bottom:none}
+
+/* ── DB browser tab ── */
+.db-table{width:100%;border-collapse:collapse;font-size:11px}
+.db-table th{padding:9px 14px;text-align:left;font-size:9px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.08em;background:rgba(15,23,42,.5);border-bottom:1px solid var(--border)}
+.db-table td{padding:10px 14px;border-bottom:1px solid rgba(30,41,59,.4)}
+.db-table tr:hover td{background:rgba(59,130,246,.03);cursor:pointer}
+
+/* ── Tabs ── */
+.tabs{display:flex;gap:0;border-bottom:1px solid var(--border);padding:0 20px;background:var(--bg2)}
+.tab{padding:10px 16px;font-size:12px;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s}
+.tab:hover{color:var(--text)}
+.tab.active{color:var(--blue);border-bottom-color:var(--blue)}
+.tab-content{display:none}
+.tab-content.active{display:block}
+
+/* ── Loading spinner ── */
+.spinner{width:24px;height:24px;border:2px solid var(--border);border-top-color:var(--blue);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── Colors ── */
+.c-critical{color:var(--rose)} .c-high{color:var(--amber)} .c-medium{color:var(--blue)} .c-low{color:var(--emerald)}
+.bg-critical{background:rgba(239,68,68,.15);color:var(--rose)}
+.bg-high    {background:rgba(245,158,11,.15);color:var(--amber)}
+.bg-medium  {background:rgba(59,130,246,.15);color:var(--blue)}
+.bg-low     {background:rgba(16,185,129,.15);color:var(--emerald)}
+
+/* ── CSV import modal ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:100;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:24px;width:440px;max-width:90vw}
+.modal h3{font-size:15px;font-weight:600;margin-bottom:16px}
+textarea.csv-input{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px;font-size:11px;font-family:monospace;color:var(--text);outline:none;resize:vertical;min-height:120px}
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<aside class="sidebar">
+  <div class="logo">
+    <div class="logo-icon">🛡</div>
+    <div><h1>ChainSentinel</h1><p>Intelligence v1.0</p></div>
+  </div>
+  <nav>
+    <div class="nav-section">分析</div>
+    <button class="nav-item active" onclick="switchTab('workspace')">⬡ 风险工作台</button>
+    <button class="nav-item" onclick="switchTab('db')">◈ 历史数据库</button>
+    <button class="nav-item" onclick="switchTab('blacklist')">⛔ 黑名单管理</button>
+    <div class="nav-section">配置</div>
+    <button class="nav-item" onclick="switchTab('watchlist')">◎ 监控名单</button>
+    <button class="nav-item">⚙ 系统参数</button>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="avatar">监</div>
+    <div>
+      <div style="font-size:11px;font-weight:600;color:white">监管员 #9527</div>
+      <div style="font-size:9px;color:var(--emerald)">在线活跃</div>
+    </div>
+  </div>
+</aside>
+
+<!-- Main -->
+<div class="main">
+  <!-- Header -->
+  <header>
+    <div class="search-wrap">
+      <span class="search-icon">⌕</span>
+      <input id="quickAddr" type="text" placeholder="输入地址快速添加到分析队列..."
+        onkeydown="if(event.key==='Enter')quickAdd()"/>
+    </div>
+    <button class="btn btn-primary btn-sm" onclick="quickAdd()">⚡ 添加分析</button>
+    <button class="btn btn-ghost btn-sm" onclick="openCSVModal()">📥 批量导入</button>
+    <button class="btn btn-ghost btn-sm" onclick="loadFromDB()">🗄 从数据库载入</button>
+    <div class="status"><div class="dot"></div>系统运行中</div>
+  </header>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <div class="tab active" id="tab-workspace" onclick="switchTab('workspace')">风险工作台</div>
+    <div class="tab" id="tab-db" onclick="switchTab('db')">历史数据库</div>
+    <div class="tab" id="tab-blacklist" onclick="switchTab('blacklist')">黑名单</div>
+    <div class="tab" id="tab-watchlist" onclick="switchTab('watchlist')">监控名单</div>
+  </div>
+
+  <!-- ── TAB: Workspace ── -->
+  <div class="tab-content active" id="tc-workspace" style="flex:1;display:flex;overflow:hidden">
+
+    <!-- Left: address list -->
+    <div class="addr-panel">
+      <div class="addr-panel-header">
+        <h3>分析队列</h3>
+        <span id="addrCount" style="font-size:10px;color:var(--muted)">0 个地址</span>
+      </div>
+      <div class="addr-toolbar">
+        <input class="addr-input" id="addrInputSide" placeholder="0x..." 
+          onkeydown="if(event.key==='Enter')addAddr()"/>
+        <button class="btn btn-primary btn-sm" onclick="addAddr()">+</button>
+        <button class="btn btn-ghost btn-sm" onclick="analyzeAll()" title="全部分析">▶</button>
+      </div>
+      <div class="addr-list" id="addrList">
+        <div class="addr-empty">
+          ⬡<br/>输入地址添加到队列<br/>
+          <span style="font-size:10px">或点击上方"批量导入"</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: detail -->
+    <div class="detail-panel" id="detailPanel">
+      <div class="detail-empty">
+        <div class="big-icon">🛡</div>
+        <div style="font-size:14px;font-weight:600">选择地址查看详情</div>
+        <div style="font-size:12px">在左侧添加地址并点击分析</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TAB: DB ── -->
+  <div class="tab-content" id="tc-db" style="flex:1;overflow-y:auto;padding:20px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+      <h3 style="font-size:15px;font-weight:600">历史分析数据库</h3>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-ghost btn-sm" onclick="refreshDB()">↻ 刷新</button>
+        <button class="btn btn-ghost btn-sm" onclick="exportDB()">↓ 导出 CSV</button>
+      </div>
+    </div>
+    <div id="dbStats" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px"></div>
+    <div class="panel">
+      <table class="db-table" id="dbTable">
+        <thead><tr>
+          <th>地址</th><th>风险等级</th><th>风险分</th><th>污染率</th>
+          <th>命中手法</th><th>节点数</th><th>分析时间</th><th>操作</th>
+        </tr></thead>
+        <tbody id="dbBody">
+          <tr><td colspan="8" style="text-align:center;padding:40px;color:var(--muted)">
+            载入 JSON 文件后数据将显示在此处
+          </td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── TAB: Blacklist ── -->
+  <div class="tab-content" id="tc-blacklist" style="flex:1;overflow-y:auto;padding:20px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+      <h3 style="font-size:15px;font-weight:600">黑名单地址库</h3>
+      <button class="btn btn-primary btn-sm" onclick="openAddBlacklist()">+ 添加地址</button>
+    </div>
+    <div class="panel">
+      <table class="db-table" id="blTable">
+        <thead><tr><th>地址</th><th>标签</th><th>来源</th><th>添加时间</th><th>操作</th></tr></thead>
+        <tbody id="blBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── TAB: Watchlist ── -->
+  <div class="tab-content" id="tc-watchlist" style="flex:1;overflow-y:auto;padding:20px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+      <h3 style="font-size:15px;font-weight:600">持续监控名单</h3>
+      <button class="btn btn-primary btn-sm" onclick="addToWatchlist()">+ 添加监控</button>
+    </div>
+    <div class="panel">
+      <table class="db-table" id="wlTable">
+        <thead><tr><th>地址</th><th>标签</th><th>最新风险</th><th>添加时间</th><th>备注</th><th>操作</th></tr></thead>
+        <tbody id="wlBody">
+          <tr><td colspan="6" style="text-align:center;padding:40px;color:var(--muted)">监控名单为空</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<!-- CSV import modal -->
+<div class="modal-overlay" id="csvModal">
+  <div class="modal">
+    <h3>批量导入地址</h3>
+    <p style="font-size:11px;color:var(--muted);margin-bottom:10px">每行一个地址，或逗号分隔</p>
+    <textarea class="csv-input" id="csvInput" placeholder="0x1234...&#10;0x5678...&#10;0xabcd..."></textarea>
+    <div style="display:flex;gap:8px;margin-top:12px;justify-content:flex-end">
+      <button class="btn btn-ghost btn-sm" onclick="closeCSVModal()">取消</button>
+      <button class="btn btn-primary btn-sm" onclick="importCSV()">导入</button>
+    </div>
+  </div>
+</div>
+
+<!-- Hidden file input -->
+<input type="file" id="jsonFile" accept=".json" style="display:none" onchange="loadJSON(event)"/>
+<input type="file" id="csvFile"  accept=".csv,.txt" style="display:none" onchange="loadCSV(event)"/>
+
+<script>
+// ═══════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════
+const state = {
+  addresses: [],    // [{addr, status, report}]
+  selected:  null,  // addr string
+  reports:   {},    // addr -> report
+  dbRecords: [],    // loaded DB records
+  blacklist: {},    // addr -> {label, source}
+  watchlist: [],
+};
+
+const API = 'http://localhost:5001/api';
+
+// ═══════════════════════════════════════════════════════
+// TABS
+// ═══════════════════════════════════════════════════════
+function switchTab(name) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+  document.getElementById('tc-'+name).classList.add('active');
+  document.getElementById('tab-'+name)?.classList.add('active');
+  if (name === 'db') refreshDB();
+  if (name === 'blacklist') renderBlacklist();
+}
+
+// ═══════════════════════════════════════════════════════
+// ADDRESS LIST
+// ═══════════════════════════════════════════════════════
+function addAddr(addr) {
+  const input = document.getElementById('addrInputSide');
+  const val   = (addr || input.value).trim();
+  if (!val || !val.startsWith('0x') || val.length < 20) return;
+  if (state.addresses.find(a => a.addr === val.toLowerCase())) return;
+  state.addresses.push({ addr: val.toLowerCase(), status: 'pending', report: null });
+  input.value = '';
+  renderAddrList();
+}
+
+function quickAdd() {
+  const input = document.getElementById('quickAddr');
+  addAddr(input.value);
+  input.value = '';
+}
+
+function removeAddr(addr) {
+  state.addresses = state.addresses.filter(a => a.addr !== addr);
+  if (state.selected === addr) {
+    state.selected = null;
+    showEmptyDetail();
+  }
+  renderAddrList();
+}
+
+function selectAddr(addr) {
+  state.selected = addr;
+  renderAddrList();
+  const item = state.addresses.find(a => a.addr === addr);
+  if (item?.report) renderDetail(item.report);
+  else if (item?.status === 'done') renderDetail(state.reports[addr]);
+  else showEmptyDetail();
+}
+
+function renderAddrList() {
+  const el = document.getElementById('addrList');
+  document.getElementById('addrCount').textContent = state.addresses.length + ' 个地址';
+  if (!state.addresses.length) {
+    el.innerHTML = `<div class="addr-empty">⬡<br/>输入地址添加到队列<br/><span style="font-size:10px">或点击上方"批量导入"</span></div>`;
+    return;
+  }
+  el.innerHTML = state.addresses.map(item => {
+    const r     = item.report || state.reports[item.addr];
+    const level = r?.risk?.risk_level || '—';
+    const score = r?.risk?.risk_score || 0;
+    const cls   = `bg-${level.toLowerCase()}`;
+    const barColor = {CRITICAL:'var(--rose)',HIGH:'var(--amber)',MEDIUM:'var(--blue)',LOW:'var(--emerald)'}[level] || '#475569';
+    const statusText = {pending:'待分析',analyzing:'分析中...',done:level,error:'错误'}[item.status] || '—';
+    return `
+      <div class="addr-card ${state.selected===item.addr?'selected':''} ${item.status==='analyzing'?'analyzing':''}"
+           onclick="selectAddr('${item.addr}')">
+        <button class="addr-delete" onclick="event.stopPropagation();removeAddr('${item.addr}')">×</button>
+        <div class="addr-top">
+          <span class="addr-hash">${item.addr.slice(0,10)}...${item.addr.slice(-6)}</span>
+          ${item.status==='done'
+            ? `<span class="addr-risk-badge ${cls}">${level}</span>`
+            : item.status==='analyzing'
+            ? `<div class="spinner" style="width:14px;height:14px;border-width:1.5px"></div>`
+            : `<span style="font-size:9px;color:var(--muted)">待分析</span>`}
+        </div>
+        <div class="addr-meta">
+          ${item.status==='done' && r
+            ? `分 ${r.risk.risk_score}/100 · 污染 ${r.risk.taint_rate}% · ${r.risk.triggered?.length||0} 手法`
+            : statusText}
+        </div>
+        ${item.status==='done' ? `
+        <div class="addr-score-bar">
+          <div class="addr-score-fill" style="width:${score}%;background:${barColor}"></div>
+        </div>` : ''}
+      </div>`;
+  }).join('');
+}
+
+// ═══════════════════════════════════════════════════════
+// ANALYZE
+// ═══════════════════════════════════════════════════════
+async function analyzeOne(addr) {
+  const item = state.addresses.find(a => a.addr === addr);
+  if (!item) return;
+  item.status = 'analyzing';
+  renderAddrList();
+
+  // 先检查有没有 Flask API
+  try {
+    const resp = await fetch(`${API}/analyze`, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({address: addr, hops: 2}),
+      signal: AbortSignal.timeout(300000)
+    });
+    if (resp.ok) {
+      const report = await resp.json();
+      item.status = 'done';
+      item.report = report;
+      state.reports[addr] = report;
+      renderAddrList();
+      if (state.selected === addr) renderDetail(report);
+      return;
+    }
+  } catch(e) {
+    // API 没启动，提示手动载入
+  }
+
+  // 没有 API，提示手动载入 JSON
+  item.status = 'pending';
+  renderAddrList();
+  alert(`Flask API 未启动。\n\n请先在终端运行：\n  pip install flask flask-cors\n  cd compliance_engine\n  python db.py\n\n或者手动载入 JSON 文件（顶部"从数据库载入"按钮）`);
+}
+
+function analyzeAll() {
+  const pending = state.addresses.filter(a => a.status === 'pending');
+  if (!pending.length) { alert('所有地址都已分析完成'); return; }
+  pending.forEach(item => analyzeOne(item.addr));
+}
+
+// ═══════════════════════════════════════════════════════
+// DETAIL RENDER
+// ═══════════════════════════════════════════════════════
+const RC = {CRITICAL:'#ef4444',HIGH:'#f59e0b',MEDIUM:'#3b82f6',LOW:'#10b981'};
+const RB = {CRITICAL:'rgba(239,68,68,.15)',HIGH:'rgba(245,158,11,.15)',MEDIUM:'rgba(59,130,246,.15)',LOW:'rgba(16,185,129,.15)'};
+const MB = {CRITICAL:'bg-critical',HIGH:'bg-high',MEDIUM:'bg-medium',LOW:'bg-low'};
+
+function renderDetail(data) {
+  const risk   = data.risk || {};
+  const graph  = data.graph || {};
+  const gs     = graph.summary || {};
+  const toks   = data.tokens || {};
+  const meta   = data.meta || {};
+  const level  = risk.risk_level || 'LOW';
+  const score  = risk.risk_score || 0;
+  const taint  = risk.taint_rate || 0;
+  const trig   = risk.triggered || [];
+  const addr   = meta.address || risk.address || '';
+
+  document.getElementById('detailPanel').innerHTML = `
+
+    <!-- addr bar -->
+    <div style="background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);border-radius:8px;padding:12px 16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+      <span style="font-size:10px;color:var(--muted)">地址</span>
+      <span style="font-family:monospace;font-size:11px">${addr}</span>
+      <span style="color:var(--border)">|</span>
+      <span style="font-size:10px;color:var(--muted)">节点 <b style="color:white">${(gs.total_nodes||0).toLocaleString()}</b></span>
+      <span style="font-size:10px;color:var(--muted)">边 <b style="color:white">${(gs.total_edges||0).toLocaleString()}</b></span>
+      <span style="font-size:10px;color:var(--muted)">污染率 <b style="color:${RC[level]}">${taint}%</b></span>
+      <span style="margin-left:auto;padding:3px 12px;border-radius:12px;font-size:11px;font-weight:700;background:${RB[level]};color:${RC[level]}">${level}</span>
+      <button class="btn btn-ghost btn-sm" onclick="addToWatchlistQuick('${addr}')">+ 监控</button>
+    </div>
+
+    <!-- stats -->
+    <div class="stats-row">
+      <div class="stat-card c-blue"><div class="stat-label">风险评分</div><div class="stat-value" style="color:var(--blue)">${score}<span style="font-size:14px;color:var(--muted)">/100</span></div><div class="stat-sub">综合加权</div></div>
+      <div class="stat-card c-rose"><div class="stat-label">命中手法</div><div class="stat-value" style="color:var(--rose)">${trig.length}</div><div class="stat-sub">${trig.filter(t=>['CRITICAL','HIGH'].includes(t.severity)).length} 高危</div></div>
+      <div class="stat-card c-amber"><div class="stat-label">污染率</div><div class="stat-value" style="color:var(--amber)">${taint}%</div><div class="stat-sub">Haircut 模型</div></div>
+      <div class="stat-card c-purple"><div class="stat-label">币种</div><div class="stat-value" style="color:white">${Object.keys(toks).length}</div><div class="stat-sub">${Object.keys(toks).slice(0,3).join(', ')}</div></div>
+    </div>
+
+    <!-- analysis grid -->
+    <div class="analysis-grid">
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div class="panel">
+          <div class="panel-head"><div class="panel-title">◎ 风险评分</div></div>
+          <div class="panel-body" style="padding-bottom:12px">
+            <div id="gaugeChart"></div>
+            <div class="audit-box">
+              <div class="lbl">分析建议</div>
+              <p id="auditP">${auditText(level, trig, taint)}</p>
+            </div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-head">
+            <div class="panel-title">⚑ 命中手法</div>
+            <span style="font-size:10px;color:var(--muted)">${trig.length} 项</span>
+          </div>
+          <div class="panel-body">
+            <div class="method-list">
+              ${trig.length ? trig.map(t => `
+                <div class="method-item">
+                  <div class="method-top">
+                    <span class="m-badge ${MB[t.severity]||'bg-medium'}">${t.detector.toUpperCase().replace(/_/g,' ')}</span>
+                    <span class="m-sev">${t.severity}</span>
+                  </div>
+                  <div class="m-desc">${t.summary||''}</div>
+                </div>`).join('') : '<div style="color:var(--muted);font-size:11px;text-align:center;padding:20px">未检测到已知风险模式</div>'}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-head">
+          <div class="panel-title">⬡ 资金流向图谱</div>
+          <span style="font-size:10px;color:var(--muted)">前 ${Math.min(200,gs.total_nodes||0)} 节点</span>
+        </div>
+        <div id="mainGraph"></div>
+        <div class="graph-legend">
+          <div class="legend-item"><div class="legend-dot" style="background:#ef4444"></div>黑名单</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#f59e0b"></div>Mixer</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#3b82f6"></div>交易所</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#10b981"></div>DeFi</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#64748b"></div>普通</div>
+          <div style="margin-left:auto;font-size:9px;color:#334155">拖拽·滚轮缩放</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- monitor table -->
+    <div class="panel">
+      <div class="panel-head"><div class="panel-title">↻ 关联地址</div></div>
+      <table class="mon-table">
+        <thead><tr><th>地址</th><th>风险类型</th><th>特征</th><th>入度</th><th>出度</th><th style="text-align:right">操作</th></tr></thead>
+        <tbody id="monBody"></tbody>
+      </table>
+    </div>
+  `;
+
+  renderGauge(score, level);
+  renderGraph(graph.json || {});
+  renderMonTable(graph.json || {});
+}
+
+function showEmptyDetail() {
+  document.getElementById('detailPanel').innerHTML = `
+    <div class="detail-empty">
+      <div class="big-icon">🛡</div>
+      <div style="font-size:14px;font-weight:600">选择地址查看详情</div>
+      <div style="font-size:12px">在左侧队列中点击一个已分析的地址</div>
+    </div>`;
+}
+
+function auditText(level, trig, taint) {
+  const names = trig.slice(0,3).map(t=>t.detector).join('、');
+  return {
+    CRITICAL: `污染率 ${taint}%，高危风险。检测到 ${names}。建议立即冻结并提交 STR 报告。`,
+    HIGH:     `风险 HIGH，命中 ${trig.length} 项（${names}）。建议暂停业务并人工复核。`,
+    MEDIUM:   `存在可疑模式（${names}）。建议加强监控，收集更多证据。`,
+    LOW:      `未检测到明显风险，当前为低风险。建议持续监控。`,
+  }[level] || '分析完成。';
+}
+
+// ═══════════════════════════════════════════════════════
+// CHARTS
+// ═══════════════════════════════════════════════════════
+function renderGauge(score, level) {
+  const el = document.getElementById('gaugeChart');
+  if (!el) return;
+  const c = echarts.init(el, 'dark');
+  c.setOption({
+    backgroundColor:'transparent',
+    series:[{type:'gauge',startAngle:180,endAngle:0,radius:'95%',center:['50%','78%'],
+      min:0,max:100,
+      axisLine:{lineStyle:{width:10,color:[[.3,'#10b981'],[.6,'#f59e0b'],[1,'#ef4444']]}},
+      pointer:{itemStyle:{color:RC[level]},length:'65%',width:4},
+      axisTick:{show:false},splitLine:{show:false},axisLabel:{show:false},
+      detail:{fontSize:32,offsetCenter:[0,'10%'],formatter:'{value}',color:RC[level],fontWeight:'bold',fontFamily:'monospace'},
+      title:{show:false},data:[{value:score}]
+    }]
+  });
+}
+
+function renderGraph(gj) {
+  const el = document.getElementById('mainGraph');
+  if (!el) return;
+  const raw_nodes = gj.nodes || [];
+  if (!raw_nodes.length) { el.innerHTML='<div style="display:flex;align-items:center;justify-content:center;height:440px;color:var(--muted);font-size:12px">暂无图谱数据</div>'; return; }
+  const c = echarts.init(el, 'dark');
+  c.setOption({
+    backgroundColor:'transparent',
+    tooltip:{trigger:'item'},
+    series:[{
+      type:'graph',layout:'force',draggable:true,
+      data: raw_nodes.map(n=>({
+        id:n.id, name:n.name||n.id?.slice(0,8)+'...',
+        symbolSize:n.size||10, itemStyle:{color:n.color||'#64748b'},
+        label:{show:(n.size||10)>25,color:'#94a3b8',fontSize:9},
+      })),
+      links: (gj.edges||[]).slice(0,300).map(e=>({
+        source:e.source,target:e.target,
+        lineStyle:{color:'rgba(51,65,85,.35)',width:.8}
+      })),
+      force:{repulsion:120,edgeLength:[40,120],gravity:.08},
+      lineStyle:{curveness:.1},emphasis:{focus:'adjacency'},
+    }]
+  });
+}
+
+function renderMonTable(gj) {
+  const tbody = document.getElementById('monBody');
+  if (!tbody) return;
+  const nodes = (gj.nodes||[]).filter(n=>n.color!=='#64748b')
+    .sort((a,b)=>(b.stats?.in_count||0)-(a.stats?.in_count||0)).slice(0,10);
+  const CL={
+    '#ef4444':'CRITICAL','#f59e0b':'HIGH','#3b82f6':'MEDIUM','#10b981':'LOW'
+  };
+  if (!nodes.length) {
+    tbody.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:20px">未发现高风险关联地址</td></tr>';
+    return;
+  }
+  tbody.innerHTML = nodes.map(n=>{
+    const lvl = CL[n.color]||'MEDIUM';
+    return `<tr>
+      <td style="font-family:monospace;color:var(--blue);font-size:10px">${n.id?.slice(0,16)}...</td>
+      <td><span style="font-size:9px;font-weight:700;padding:2px 7px;border-radius:4px;background:${RB[lvl]};color:${RC[lvl]}">${(n.labels?.[0]||'风险地址').slice(0,18)}</span></td>
+      <td style="color:var(--muted);font-size:10px">入${n.stats?.in_count||0}/出${n.stats?.out_count||0}${n.stats?.tokens?.length?' · '+n.stats.tokens.slice(0,2).join(','):''}</td>
+      <td style="font-family:monospace;font-size:10px">${n.stats?.in_count||0}</td>
+      <td style="font-family:monospace;font-size:10px">${n.stats?.out_count||0}</td>
+      <td style="text-align:right">
+        <button style="background:none;border:none;font-size:10px;font-weight:600;color:var(--blue);cursor:pointer;margin-right:8px" onclick="addAddr('${n.id}')">追踪</button>
+        <button style="background:none;border:none;font-size:10px;font-weight:600;color:var(--rose);cursor:pointer">标记</button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+// ═══════════════════════════════════════════════════════
+// JSON LOAD (manual file picker)
+// ═══════════════════════════════════════════════════════
+function loadFromDB() {
+  document.getElementById('jsonFile').click();
+}
+
+function loadJSON(event) {
+  const file = event.target.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      const addr = (data.meta?.address || data.risk?.address || '').toLowerCase();
+      if (!addr) { alert('JSON 格式不正确'); return; }
+
+      // 添加到队列
+      if (!state.addresses.find(a => a.addr === addr)) {
+        state.addresses.push({addr, status:'done', report:data});
+      } else {
+        state.addresses.find(a=>a.addr===addr).status = 'done';
+        state.addresses.find(a=>a.addr===addr).report = data;
+      }
+      state.reports[addr] = data;
+      state.selected = addr;
+
+      // 添加到 DB 显示
+      addToDBRecords(data);
+
+      renderAddrList();
+      renderDetail(data);
+    } catch(err) { alert('JSON 解析失败: '+err.message); }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+function addToDBRecords(data) {
+  const risk = data.risk || {};
+  const meta = data.meta || {};
+  const gs   = data.graph?.summary || {};
+  const addr = (meta.address || risk.address || '').toLowerCase();
+  if (!addr) return;
+  // 去重
+  state.dbRecords = state.dbRecords.filter(r=>r.address !== addr);
+  state.dbRecords.unshift({
+    address:     addr,
+    risk_level:  risk.risk_level,
+    risk_score:  risk.risk_score,
+    taint_rate:  risk.taint_rate,
+    triggered:   risk.triggered || [],
+    graph_nodes: gs.total_nodes || 0,
+    analyzed_at: meta.analyzed_at || new Date().toISOString(),
+    _report:     data,
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+// DB TAB
+// ═══════════════════════════════════════════════════════
+function refreshDB() {
+  // stats
+  const stats = {
+    total:    state.dbRecords.length,
+    critical: state.dbRecords.filter(r=>r.risk_level==='CRITICAL').length,
+    high:     state.dbRecords.filter(r=>r.risk_level==='HIGH').length,
+    medium:   state.dbRecords.filter(r=>['MEDIUM','LOW'].includes(r.risk_level)).length,
+  };
+  document.getElementById('dbStats').innerHTML = `
+    <div class="stat-card c-blue" style="padding:12px"><div class="stat-label">总记录</div><div class="stat-value" style="color:var(--blue);font-size:20px">${stats.total}</div></div>
+    <div class="stat-card c-rose" style="padding:12px"><div class="stat-label">CRITICAL</div><div class="stat-value" style="color:var(--rose);font-size:20px">${stats.critical}</div></div>
+    <div class="stat-card c-amber" style="padding:12px"><div class="stat-label">HIGH</div><div class="stat-value" style="color:var(--amber);font-size:20px">${stats.high}</div></div>
+    <div class="stat-card" style="padding:12px"><div class="stat-label">其他</div><div class="stat-value" style="color:var(--emerald);font-size:20px">${stats.medium}</div></div>
+  `;
+
+  const tbody = document.getElementById('dbBody');
+  if (!state.dbRecords.length) {
+    tbody.innerHTML='<tr><td colspan="8" style="text-align:center;padding:40px;color:var(--muted)">暂无记录，载入 JSON 报告后数据显示在此</td></tr>';
+    return;
+  }
+  tbody.innerHTML = state.dbRecords.map(r => `
+    <tr onclick="loadFromRecord('${r.address}')">
+      <td style="font-family:monospace;color:var(--blue);font-size:10px">${r.address.slice(0,16)}...</td>
+      <td><span style="font-size:9px;font-weight:700;padding:2px 7px;border-radius:4px;background:${RB[r.risk_level]||RB.LOW};color:${RC[r.risk_level]||RC.LOW}">${r.risk_level}</span></td>
+      <td style="font-family:monospace;font-size:11px">${r.risk_score}</td>
+      <td style="font-size:11px">${r.taint_rate}%</td>
+      <td style="font-size:10px;color:var(--muted)">${r.triggered?.length||0} 项</td>
+      <td style="font-family:monospace;font-size:10px">${(r.graph_nodes||0).toLocaleString()}</td>
+      <td style="font-size:10px;color:var(--muted)">${r.analyzed_at?.slice(0,16)||'—'}</td>
+      <td style="text-align:right">
+        <button style="background:none;border:none;font-size:10px;font-weight:600;color:var(--blue);cursor:pointer" onclick="event.stopPropagation();loadFromRecord('${r.address}')">查看</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function loadFromRecord(addr) {
+  const rec = state.dbRecords.find(r=>r.address===addr);
+  if (!rec?._report) return;
+  switchTab('workspace');
+  if (!state.addresses.find(a=>a.addr===addr)) {
+    state.addresses.push({addr, status:'done', report:rec._report});
+  }
+  state.selected = addr;
+  state.reports[addr] = rec._report;
+  renderAddrList();
+  renderDetail(rec._report);
+}
+
+function exportDB() {
+  if (!state.dbRecords.length) { alert('暂无数据'); return; }
+  const lines = ['address,risk_level,risk_score,taint_rate,triggered_count,graph_nodes,analyzed_at'];
+  state.dbRecords.forEach(r => {
+    lines.push([r.address,r.risk_level,r.risk_score,r.taint_rate,r.triggered?.length||0,r.graph_nodes||0,r.analyzed_at||''].join(','));
+  });
+  const blob = new Blob([lines.join('\n')], {type:'text/csv'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `chainsentinel_export_${Date.now()}.csv`;
+  a.click();
+}
+
+// ═══════════════════════════════════════════════════════
+// BLACKLIST TAB
+// ═══════════════════════════════════════════════════════
+function renderBlacklist() {
+  // 从 config 里内置的黑名单（演示用）
+  const builtin = {
+    "0x098b716b8aaf21512996dc57eb0615e2383e2f96": {label:"Lazarus Group (OFAC)", source:"OFAC"},
+    "0xd90e2f925da726b50c4ed8d0fb90ad053324f31b": {label:"Tornado Cash Deployer", source:"OFAC"},
+    "0xa0e1c89ef1a489c9c7de96311ed5ce5d32c20e4b": {label:"Lazarus Group (OFAC)", source:"OFAC"},
+    "0x910cbd523d972eb0a6f4cae4618ad62622b39dbf": {label:"Tornado Cash 10 ETH", source:"OFAC"},
+    ...state.blacklist
+  };
+  const tbody = document.getElementById('blBody');
+  tbody.innerHTML = Object.entries(builtin).map(([addr, info]) => `
+    <tr>
+      <td style="font-family:monospace;color:var(--blue);font-size:10px">${addr.slice(0,20)}...</td>
+      <td style="font-size:11px">${info.label}</td>
+      <td><span style="font-size:9px;padding:2px 7px;border-radius:4px;background:rgba(59,130,246,.1);color:var(--blue)">${info.source||'manual'}</span></td>
+      <td style="font-size:10px;color:var(--muted)">${info.added_at?.slice(0,10)||'内置'}</td>
+      <td><button style="background:none;border:none;font-size:10px;color:var(--rose);cursor:pointer">删除</button></td>
+    </tr>
+  `).join('');
+}
+
+function openAddBlacklist() {
+  const addr = prompt('输入要添加的地址：');
+  if (!addr) return;
+  const label = prompt('标签说明：') || '手动添加';
+  state.blacklist[addr.toLowerCase()] = {label, source:'manual', added_at: new Date().toISOString()};
+  renderBlacklist();
+}
+
+// ═══════════════════════════════════════════════════════
+// WATCHLIST
+// ═══════════════════════════════════════════════════════
+function addToWatchlistQuick(addr) {
+  const label = prompt('监控标签（可留空）：') || '监控地址';
+  state.watchlist.push({address: addr, label, added_at: new Date().toISOString(), notes:''});
+  alert(`已添加 ${addr.slice(0,12)}... 到监控名单`);
+}
+
+function addToWatchlist() {
+  const addr = prompt('输入监控地址：');
+  if (!addr) return;
+  addToWatchlistQuick(addr);
+}
+
+// ═══════════════════════════════════════════════════════
+// CSV IMPORT
+// ═══════════════════════════════════════════════════════
+function openCSVModal() { document.getElementById('csvModal').classList.add('open'); }
+function closeCSVModal(){ document.getElementById('csvModal').classList.remove('open'); }
+
+function importCSV() {
+  const raw = document.getElementById('csvInput').value;
+  const addrs = raw.split(/[\n,]+/).map(a=>a.trim()).filter(a=>a.startsWith('0x') && a.length>10);
+  addrs.forEach(a => addAddr(a));
+  closeCSVModal();
+  alert(`已导入 ${addrs.length} 个地址`);
+}
+</script>
+</body>
+</html>

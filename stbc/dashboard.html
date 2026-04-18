@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ChainSentinel | 风险分析工作台</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --bg:       #020617;
+  --bg2:      #0f172a;
+  --bg3:      #1e293b;
+  --border:   rgba(51,65,85,0.5);
+  --text:     #e2e8f0;
+  --muted:    #94a3b8;
+  --blue:     #3b82f6;
+  --rose:     #ef4444;
+  --amber:    #f59e0b;
+  --emerald:  #10b981;
+  --purple:   #8b5cf6;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ── Sidebar ── */
+.sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  background: var(--bg2);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0; left: 0;
+  height: 100vh;
+  z-index: 60;
+}
+
+.sidebar-logo {
+  padding: 24px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.logo-icon {
+  width: 36px; height: 36px;
+  background: var(--blue);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+}
+
+.logo-text h1 { font-size: 15px; font-weight: 700; color: white; }
+.logo-text p  { font-size: 10px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+
+nav { flex: 1; padding: 16px 12px; }
+
+.nav-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: #334155;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 8px 8px 4px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s;
+  margin-bottom: 2px;
+}
+
+.nav-item:hover { background: rgba(59,130,246,0.1); color: var(--blue); }
+.nav-item.active { background: rgba(59,130,246,0.12); color: var(--blue); font-weight: 600; }
+
+.sidebar-footer {
+  padding: 16px 20px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.avatar {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--bg3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--blue);
+}
+
+/* ── Main ── */
+.main {
+  margin-left: 240px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Header ── */
+header {
+  position: sticky; top: 0;
+  background: rgba(2,6,23,0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 32px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  z-index: 50;
+}
+
+.search-box {
+  flex: 1;
+  max-width: 560px;
+  position: relative;
+}
+
+.search-box input {
+  width: 100%;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 8px 16px 8px 40px;
+  font-size: 13px;
+  color: var(--text);
+  outline: none;
+  font-family: 'JetBrains Mono', monospace;
+  transition: border-color 0.2s;
+}
+
+.search-box input:focus { border-color: var(--blue); }
+.search-box input::placeholder { color: #475569; }
+
+.search-icon {
+  position: absolute; left: 14px; top: 50%;
+  transform: translateY(-50%);
+  color: var(--muted);
+  pointer-events: none;
+}
+
+.search-btn {
+  background: var(--blue);
+  border: none;
+  border-radius: 20px;
+  padding: 8px 20px;
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex; align-items: center; gap: 6px;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+.search-btn:hover { background: #2563eb; }
+
+.status-dot {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 11px; color: var(--muted);
+  margin-left: auto;
+}
+
+.dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--emerald);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* ── Content ── */
+main {
+  flex: 1;
+  padding: 28px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ── Cards row ── */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.stat-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+}
+
+.stat-card.blue::after  { background: var(--blue); }
+.stat-card.rose::after  { background: var(--rose); }
+.stat-card.amber::after { background: var(--amber); }
+.stat-card.purple::after{ background: var(--purple); }
+
+.stat-label { font-size: 10px; font-weight: 700; color: #475569; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+.stat-value { font-size: 28px; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+.stat-value.blue   { color: var(--blue); }
+.stat-value.rose   { color: var(--rose); }
+.stat-value.amber  { color: var(--amber); }
+.stat-value.white  { color: white; }
+.stat-sub  { font-size: 11px; color: var(--muted); margin-top: 6px; }
+
+/* ── Main grid ── */
+.analysis-grid {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.panel {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.panel-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.panel-title {
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.panel-body { padding: 20px; }
+
+/* ── Gauge ── */
+#gaugeChart { width: 100%; height: 220px; }
+
+.audit-box {
+  margin-top: 16px;
+  padding: 14px;
+  background: rgba(239,68,68,0.05);
+  border: 1px solid rgba(239,68,68,0.2);
+  border-radius: 10px;
+}
+
+.audit-box .label { font-size: 10px; font-weight: 700; color: var(--rose); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
+.audit-box p { font-size: 12px; color: #cbd5e1; line-height: 1.6; }
+
+/* ── Risk methods ── */
+.method-list { padding: 12px 20px 16px; display: flex; flex-direction: column; gap: 10px; }
+
+.method-item {
+  padding: 12px 14px;
+  background: rgba(15,23,42,0.6);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.method-item:hover { border-color: rgba(59,130,246,0.4); }
+
+.method-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.method-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.badge-critical { background: rgba(239,68,68,0.15); color: var(--rose); }
+.badge-high     { background: rgba(245,158,11,0.15); color: var(--amber); }
+.badge-medium   { background: rgba(59,130,246,0.15); color: var(--blue); }
+.badge-low      { background: rgba(16,185,129,0.15); color: var(--emerald); }
+
+.method-conf { font-size: 10px; color: #475569; }
+.method-desc { font-size: 11px; color: var(--muted); line-height: 1.5; }
+
+/* ── Graph ── */
+#mainGraph { width: 100%; height: 520px; }
+
+.graph-legend {
+  padding: 12px 20px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.legend-item {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 11px; color: var(--muted);
+}
+
+.legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+/* ── Table ── */
+.monitor-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.monitor-table th {
+  padding: 12px 20px;
+  text-align: left;
+  font-size: 10px;
+  font-weight: 700;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: rgba(15,23,42,0.5);
+  border-bottom: 1px solid var(--border);
+}
+
+.monitor-table td { padding: 14px 20px; border-bottom: 1px solid rgba(30,41,59,0.5); vertical-align: middle; }
+.monitor-table tr:hover td { background: rgba(59,130,246,0.03); }
+.monitor-table tr:last-child td { border-bottom: none; }
+
+.addr-cell { font-family: 'JetBrains Mono', monospace; color: var(--blue); font-size: 11px; }
+.risk-badge { font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 6px; display: inline-block; }
+.action-btn { background: none; border: none; font-size: 11px; font-weight: 600; cursor: pointer; padding: 0; }
+.action-btn.primary { color: var(--blue); }
+.action-btn.danger  { color: var(--rose); }
+
+/* ── Loading ── */
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  gap: 16px;
+  color: var(--muted);
+}
+
+.spinner {
+  width: 32px; height: 32px;
+  border: 2px solid var(--border);
+  border-top-color: var(--blue);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Address info bar ── */
+.addr-bar {
+  background: rgba(59,130,246,0.08);
+  border: 1px solid rgba(59,130,246,0.2);
+  border-radius: 10px;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.addr-bar .label { font-size: 11px; color: var(--muted); }
+.addr-bar .value { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: white; }
+.addr-bar .sep   { color: var(--border); }
+
+.risk-level-badge {
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  margin-left: auto;
+}
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-icon">🛡</div>
+    <div class="logo-text">
+      <h1>ChainSentinel</h1>
+      <p>Intelligence v1.0</p>
+    </div>
+  </div>
+  <nav>
+    <div class="nav-label">核心功能</div>
+    <a class="nav-item active" href="#">
+      <span>⬡</span> 风险工作台
+    </a>
+    <a class="nav-item" href="#">
+      <span>◎</span> 监控中心
+    </a>
+    <a class="nav-item" href="#">
+      <span>↗</span> 溯源分析
+    </a>
+    <a class="nav-item" href="#">
+      <span>≡</span> 分析报告
+    </a>
+    <div class="nav-label" style="margin-top:20px">配置</div>
+    <a class="nav-item" href="#">
+      <span>◈</span> 标签画像库
+    </a>
+    <a class="nav-item" href="#">
+      <span>⚙</span> 系统参数
+    </a>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="avatar">监</div>
+    <div>
+      <div style="font-size:12px;font-weight:600;color:white">监管员 #9527</div>
+      <div style="font-size:10px;color:var(--emerald)">在线活跃</div>
+    </div>
+  </div>
+</aside>
+
+<!-- Main -->
+<div class="main">
+
+  <!-- Header -->
+  <header>
+    <div class="search-box">
+      <span class="search-icon">⌕</span>
+      <input id="addrInput" type="text"
+        placeholder="输入以太坊地址，例如 0x098B716B..."
+        value="0x098B716B8Aaf21512996dC57EB0615e2383E2f96"/>
+    </div>
+    <button class="search-btn" onclick="loadReport()">
+      ⚡ 载入分析报告
+    </button>
+    <div class="status-dot">
+      <div class="dot"></div>
+      系统运行中
+    </div>
+  </header>
+
+  <main id="mainContent">
+    <div class="loading">
+      <div class="spinner"></div>
+      <div>点击"载入分析报告"读取 JSON 文件</div>
+    </div>
+  </main>
+
+</div>
+
+<!-- Hidden file input -->
+<input type="file" id="fileInput" accept=".json" style="display:none" onchange="handleFile(event)"/>
+
+<script>
+// ── 颜色映射 ──────────────────────────────────────────────
+const RISK_COLOR = {
+  CRITICAL: '#ef4444',
+  HIGH:     '#f59e0b',
+  MEDIUM:   '#3b82f6',
+  LOW:      '#10b981',
+};
+
+const BADGE_CLASS = {
+  CRITICAL: 'badge-critical',
+  HIGH:     'badge-high',
+  MEDIUM:   'badge-medium',
+  LOW:      'badge-low',
+};
+
+const RISK_BG = {
+  CRITICAL: 'rgba(239,68,68,0.15)',
+  HIGH:     'rgba(245,158,11,0.15)',
+  MEDIUM:   'rgba(59,130,246,0.15)',
+  LOW:      'rgba(16,185,129,0.15)',
+};
+
+// ── 载入报告 ──────────────────────────────────────────────
+function loadReport() {
+  document.getElementById('fileInput').click();
+}
+
+function handleFile(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      renderDashboard(data);
+    } catch(err) {
+      alert('JSON 解析失败: ' + err.message);
+    }
+  };
+  reader.readAsText(file);
+  // 重置 input，允许重复选同一文件
+  event.target.value = '';
+}
+
+// ── 渲染主仪表盘 ──────────────────────────────────────────
+function renderDashboard(data) {
+  const risk     = data.risk || {};
+  const graph    = data.graph || {};
+  const gs       = graph.summary || {};
+  const detectors= data.detectors || {};
+  const tokens   = data.tokens || {};
+  const meta     = data.meta || {};
+
+  const level    = risk.risk_level || 'LOW';
+  const score    = risk.risk_score || 0;
+  const taint    = risk.taint_rate || 0;
+  const triggered= risk.triggered  || [];
+  const addr     = meta.address || risk.address || '';
+
+  const mainContent = document.getElementById('mainContent');
+  mainContent.innerHTML = `
+
+    <!-- 地址信息栏 -->
+    <div class="addr-bar">
+      <span class="label">分析地址</span>
+      <span class="value">${addr}</span>
+      <span class="sep">|</span>
+      <span class="label">节点</span>
+      <span class="value">${(gs.total_nodes||0).toLocaleString()}</span>
+      <span class="sep">|</span>
+      <span class="label">边</span>
+      <span class="value">${(gs.total_edges||0).toLocaleString()}</span>
+      <span class="sep">|</span>
+      <span class="label">污染率</span>
+      <span class="value" style="color:${RISK_COLOR[level]}">${taint}%</span>
+      <span class="risk-level-badge"
+        style="background:${RISK_BG[level]};color:${RISK_COLOR[level]}">
+        ${level}
+      </span>
+    </div>
+
+    <!-- 统计卡片 -->
+    <div class="stats-row">
+      <div class="stat-card blue">
+        <div class="stat-label">风险评分</div>
+        <div class="stat-value blue font-mono">${score}<span style="font-size:16px;color:var(--muted)">/100</span></div>
+        <div class="stat-sub">综合加权评分</div>
+      </div>
+      <div class="stat-card rose">
+        <div class="stat-label">命中手法</div>
+        <div class="stat-value rose font-mono">${triggered.length}</div>
+        <div class="stat-sub">${triggered.filter(t=>t.severity==='CRITICAL'||t.severity==='HIGH').length} 个高危</div>
+      </div>
+      <div class="stat-card amber">
+        <div class="stat-label">污染率</div>
+        <div class="stat-value amber font-mono">${taint}%</div>
+        <div class="stat-sub">Haircut 模型</div>
+      </div>
+      <div class="stat-card purple">
+        <div class="stat-label">涉及币种</div>
+        <div class="stat-value white font-mono">${Object.keys(tokens).length}</div>
+        <div class="stat-sub">${Object.keys(tokens).slice(0,3).join(', ')}</div>
+      </div>
+    </div>
+
+    <!-- 主分析区 -->
+    <div class="analysis-grid">
+
+      <!-- 左栏 -->
+      <div style="display:flex;flex-direction:column;gap:16px">
+
+        <!-- 风险仪表盘 -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">◎ 实时风险评分</div>
+          </div>
+          <div class="panel-body" style="padding-bottom:12px">
+            <div id="gaugeChart"></div>
+            <div class="audit-box">
+              <div class="label">分析建议</div>
+              <p id="auditText">正在生成...</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 命中手法 -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">⚑ 命中风险手法</div>
+            <span style="font-size:11px;color:var(--muted)">${triggered.length} 项</span>
+          </div>
+          <div class="method-list" id="methodList"></div>
+        </div>
+
+      </div>
+
+      <!-- 右栏：图谱 -->
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">⬡ 资金流向图谱</div>
+          <span style="font-size:11px;color:var(--muted)">
+            显示前 ${Math.min(200, gs.total_nodes||0)} 节点
+          </span>
+        </div>
+        <div id="mainGraph"></div>
+        <div class="graph-legend">
+          <div class="legend-item"><div class="legend-dot" style="background:#ef4444"></div>黑名单/高危</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#f59e0b"></div>Mixer合约</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#3b82f6"></div>交易所</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#10b981"></div>DeFi协议</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#64748b"></div>普通地址</div>
+          <div style="margin-left:auto;font-size:10px;color:#334155">拖拽节点 · 滚轮缩放</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 监控动态表格 -->
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title">↻ 关联地址监控</div>
+      </div>
+      <table class="monitor-table" id="monitorTable">
+        <thead>
+          <tr>
+            <th>地址</th>
+            <th>风险类型</th>
+            <th>特征描述</th>
+            <th>入度</th>
+            <th>出度</th>
+            <th style="text-align:right">操作</th>
+          </tr>
+        </thead>
+        <tbody id="monitorBody"></tbody>
+      </table>
+    </div>
+  `;
+
+  // 渲染各组件
+  renderGauge(score, level);
+  renderMethods(triggered);
+  renderGraph(graph.json || {});
+  renderMonitorTable(graph.json || {}, detectors);
+  renderAuditText(level, triggered, taint);
+}
+
+// ── 仪表盘 ────────────────────────────────────────────────
+function renderGauge(score, level) {
+  const chart = echarts.init(document.getElementById('gaugeChart'), 'dark');
+  chart.setOption({
+    backgroundColor: 'transparent',
+    series: [{
+      type: 'gauge',
+      startAngle: 180, endAngle: 0,
+      radius: '95%', center: ['50%', '78%'],
+      min: 0, max: 100,
+      axisLine: {
+        lineStyle: {
+          width: 12,
+          color: [[0.3,'#10b981'],[0.6,'#f59e0b'],[1,'#ef4444']]
+        }
+      },
+      pointer: { itemStyle: { color: RISK_COLOR[level] }, length: '65%', width: 4 },
+      axisTick: { show: false },
+      splitLine: { show: false },
+      axisLabel: { show: false },
+      detail: {
+        fontSize: 38,
+        offsetCenter: [0, '10%'],
+        formatter: '{value}',
+        color: RISK_COLOR[level],
+        fontWeight: 'bold',
+        fontFamily: 'JetBrains Mono',
+      },
+      title: { show: false },
+      data: [{ value: score }]
+    }]
+  });
+}
+
+// ── 命中手法列表 ──────────────────────────────────────────
+function renderMethods(triggered) {
+  const container = document.getElementById('methodList');
+  if (!triggered.length) {
+    container.innerHTML = '<div style="color:var(--muted);font-size:12px;text-align:center;padding:20px">未检测到已知风险模式</div>';
+    return;
+  }
+  container.innerHTML = triggered.map(t => `
+    <div class="method-item">
+      <div class="method-top">
+        <span class="method-badge ${BADGE_CLASS[t.severity]||'badge-medium'}">
+          ${t.detector.toUpperCase().replace('_',' ')}
+        </span>
+        <span class="method-conf">${t.severity}</span>
+      </div>
+      <div class="method-desc">${t.summary || ''}</div>
+    </div>
+  `).join('');
+}
+
+// ── 图谱 ──────────────────────────────────────────────────
+function renderGraph(graphJson) {
+  const raw_nodes = graphJson.nodes || [];
+  const raw_edges = graphJson.edges || [];
+
+  if (!raw_nodes.length) {
+    document.getElementById('mainGraph').innerHTML =
+      '<div class="loading"><div>暂无图谱数据</div></div>';
+    return;
+  }
+
+  const chart = echarts.init(document.getElementById('mainGraph'), 'dark');
+
+  const nodes = raw_nodes.map(n => ({
+    id:         n.id,
+    name:       n.name || n.id?.slice(0,10)+'...',
+    symbolSize: n.size || 10,
+    itemStyle:  { color: n.color || '#64748b' },
+    label:      { show: (n.size||10) > 25, color: '#94a3b8', fontSize: 10 },
+    tooltip:    { formatter: () => `
+      <div style="font-family:monospace;font-size:11px">
+        ${n.id}<br/>
+        入度: ${n.stats?.in_count||0}  出度: ${n.stats?.out_count||0}<br/>
+        ${n.labels?.length ? '标签: '+n.labels.join(', ') : ''}
+      </div>
+    `}
+  }));
+
+  const links = raw_edges.slice(0, 300).map(e => ({
+    source:    e.source,
+    target:    e.target,
+    lineStyle: { color: 'rgba(51,65,85,0.35)', width: 0.8 }
+  }));
+
+  chart.setOption({
+    backgroundColor: 'transparent',
+    tooltip: { trigger: 'item' },
+    series: [{
+      type:      'graph',
+      layout:    'force',
+      draggable: true,
+      data:      nodes,
+      links:     links,
+      force: { repulsion: 120, edgeLength: [40, 120], gravity: 0.08 },
+      lineStyle: { curveness: 0.1 },
+      emphasis:  { focus: 'adjacency' },
+    }]
+  });
+}
+
+// ── 监控表格 ──────────────────────────────────────────────
+function renderMonitorTable(graphJson, detectors) {
+  const nodes  = graphJson.nodes || [];
+  const tbody  = document.getElementById('monitorBody');
+
+  // 取风险最高的前10个节点
+  const risky = nodes
+    .filter(n => n.color !== '#64748b')
+    .sort((a,b) => (b.stats?.in_count||0) - (a.stats?.in_count||0))
+    .slice(0, 10);
+
+  if (!risky.length) {
+    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:30px">未发现高风险关联地址</td></tr>`;
+    return;
+  }
+
+  const colorToLevel = {
+    '#ef4444': 'CRITICAL',
+    '#f59e0b': 'HIGH',
+    '#3b82f6': 'MEDIUM',
+    '#10b981': 'LOW',
+  };
+
+  tbody.innerHTML = risky.map(n => {
+    const lvl   = colorToLevel[n.color] || 'MEDIUM';
+    const label = n.labels?.[0] || '风险地址';
+    return `
+      <tr>
+        <td class="addr-cell">${n.id?.slice(0,16)}...</td>
+        <td>
+          <span class="risk-badge"
+            style="background:${RISK_BG[lvl]};color:${RISK_COLOR[lvl]}">
+            ${label.slice(0,20)}
+          </span>
+        </td>
+        <td style="color:var(--muted);font-size:11px">
+          入度 ${n.stats?.in_count||0} / 出度 ${n.stats?.out_count||0}
+          ${n.stats?.tokens?.length ? ' · ' + n.stats.tokens.slice(0,2).join(',') : ''}
+        </td>
+        <td style="font-family:monospace;font-size:11px">${n.stats?.in_count||0}</td>
+        <td style="font-family:monospace;font-size:11px">${n.stats?.out_count||0}</td>
+        <td style="text-align:right">
+          <button class="action-btn primary" style="margin-right:12px">追踪</button>
+          <button class="action-btn danger">标记</button>
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+// ── 审计建议文字 ──────────────────────────────────────────
+function renderAuditText(level, triggered, taint) {
+  const el = document.getElementById('auditText');
+  if (!el) return;
+
+  const names = triggered.map(t => t.detector).join('、');
+
+  const texts = {
+    CRITICAL: `该地址污染率 ${taint}%，直接命中高危名单。检测到 ${names}。建议立即冻结关联账户并提交 STR 报告。`,
+    HIGH:     `该地址风险评级 HIGH，命中 ${triggered.length} 项手法（${names}）。建议暂停相关业务并启动人工复核。`,
+    MEDIUM:   `该地址存在可疑行为模式，命中 ${names}。建议加强监控并收集更多证据，暂不冻结。`,
+    LOW:      `该地址未检测到明显风险模式，当前评级为低风险。建议持续监控。`,
+  };
+
+  el.textContent = texts[level] || texts.LOW;
+}
+</script>
+</body>
+</html>

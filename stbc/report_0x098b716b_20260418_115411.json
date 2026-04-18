@@ -1,0 +1,3830 @@
+{
+  "meta": {
+    "address": "0x098b716b8aaf21512996dc57eb0615e2383e2f96",
+    "analyzed_at": "2026-04-18T11:54:11.115380",
+    "hops": 2,
+    "engine_version": "1.0"
+  },
+  "risk": {
+    "address": "0x098b716b8aaf21512996dc57eb0615e2383e2f96",
+    "risk_level": "CRITICAL",
+    "risk_score": 99,
+    "taint_rate": 100.0,
+    "triggered": [
+      {
+        "detector": "blacklist",
+        "severity": "CRITICAL",
+        "summary": "命中 5 个已知风险地址"
+      },
+      {
+        "detector": "bipartite",
+        "severity": "HIGH",
+        "summary": "检测到 216 个二分图模式"
+      },
+      {
+        "detector": "mixer",
+        "severity": "HIGH",
+        "summary": "混币器交互 1 次"
+      },
+      {
+        "detector": "nft",
+        "severity": "HIGH",
+        "summary": "检测到 NFT 洗钱相关行为"
+      },
+      {
+        "detector": "dusting",
+        "severity": "HIGH",
+        "summary": "检测到 1 个尘埃攻击来源，已发生归并操作（高风险）"
+      },
+      {
+        "detector": "reverse_taint",
+        "severity": "HIGH",
+        "summary": "主动交互黑名单 3 次 | 被动收款自黑名单 2 次"
+      },
+      {
+        "detector": "pagerank",
+        "severity": "HIGH",
+        "summary": "PageRank 风险分: 1.0，高风险节点: 10 个"
+      },
+      {
+        "detector": "smurfing",
+        "severity": "MEDIUM",
+        "summary": "检测到 121 个拆单模式，最高频次 805 次"
+      },
+      {
+        "detector": "fanout",
+        "severity": "MEDIUM",
+        "summary": "检测到 1 个蜘蛛网中转节点"
+      },
+      {
+        "detector": "defi",
+        "severity": "MEDIUM",
+        "summary": "DeFi 滥用：dex_swap, rapid_lp, flash_loan, yield_farm"
+      },
+      {
+        "detector": "pig_butchering",
+        "severity": "MEDIUM",
+        "summary": "猪杀盘疑似三段式：诱饵 0 → 递增出账 → 归集至 0x8125e2ad98..."
+      }
+    ],
+    "summary": "CRITICAL | 风险分 99/100 | 污染率 100.0% | 11 个手法命中"
+  },
+  "graph": {
+    "summary": {
+      "total_nodes": 60816,
+      "total_edges": 101251,
+      "blacklist_nodes": 4,
+      "mixer_nodes": 1,
+      "tokens_seen": [
+        "REVERT",
+        "v1INCH",
+        "BBC",
+        "GPaid",
+        "WISS",
+        "WBTC",
+        "MOS",
+        "NIUMC",
+        "WB",
+        "MATIC",
+        "CLND",
+        "BIT",
+        "PLS",
+        "AGBC",
+        "SLP",
+        "Visit website linkgiveaway .com to claim rewards",
+        "FMB",
+        "CPR",
+        "GNT",
+        "MC"
+      ],
+      "blacklist_list": [
+        "0x098b716b8aaf21512996dc57eb0615e2383e2f96",
+        "0xa160cdab225685da1d56aa342ad8841c3b53f291",
+        "0xa0e1c89ef1a489c9c7de96311ed5ce5d32c20e4b",
+        "0x99739fa525c0a98384430235d278fd08938997f9"
+      ]
+    },
+    "json": {
+      "nodes": [
+        {
+          "id": "0x529dab7bad9ef1000c3c0d708878c83fc870f7ae",
+          "name": "0x529dab7b...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 6642,
+            "out_count": 13389,
+            "tokens": [
+              "POC",
+              "ZRX",
+              "HGC",
+              "BBC",
+              "WISS"
+            ],
+            "lifetime": 69977302
+          }
+        },
+        {
+          "id": "0x9696f59e4d72e237be84ffd425dcad154bf96976",
+          "name": "0x9696f59e...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 34,
+            "out_count": 19994,
+            "tokens": [
+              "UNQT",
+              "CAIZ",
+              "EPRO",
+              "USDT"
+            ],
+            "lifetime": 153984516
+          }
+        },
+        {
+          "id": "0xc3d03e4f041fd4cd388c549ee2a29a9e5075882f",
+          "name": "0xc3d03e4f...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 11617,
+            "out_count": 4888,
+            "tokens": [
+              "DAI",
+              "WETH",
+              "SLP"
+            ],
+            "lifetime": 176506646
+          }
+        },
+        {
+          "id": "0xcbffcb2c38ecd19468d366d392ac0c1dc7f04bb6",
+          "name": "0xcbffcb2c...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 9361,
+            "out_count": 2428,
+            "tokens": [
+              "880$ Visit https://acader.site to claim reward.",
+              "ARB",
+              "Visit https://get-usdc.org to claim rewards",
+              "REVERT",
+              "$ USDBonus.net - Visit to claim bonus rewards"
+            ],
+            "lifetime": 108252840
+          }
+        },
+        {
+          "id": "0x00c839ecbded01790d35885a639589e1f75f6318",
+          "name": "0x00c839ec...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 10090,
+            "out_count": 1531,
+            "tokens": [
+              "FALCON",
+              "ICC",
+              "MT",
+              "TKC",
+              "NEP"
+            ],
+            "lifetime": 158970537
+          }
+        },
+        {
+          "id": "0x0e26a21013f2f8c0362cfae608b4e69a249d5efc",
+          "name": "0x0e26a210...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 5302,
+            "out_count": 5001,
+            "tokens": [
+              "SLP",
+              "WETH",
+              "FTM"
+            ],
+            "lifetime": 133036750
+          }
+        },
+        {
+          "id": "0xe1a11ae29be1699811b0d20c5a9d2031f9049054",
+          "name": "0xe1a11ae2...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 7,
+            "out_count": 9999,
+            "tokens": [
+              "KIP",
+              "CHILLMOG"
+            ],
+            "lifetime": 782184
+          }
+        },
+        {
+          "id": "0x098b716b8aaf21512996dc57eb0615e2383e2f96",
+          "name": "0x098b716b...",
+          "color": "#ef4444",
+          "size": 50,
+          "labels": [
+            "Lazarus — Ronin Bridge Hack"
+          ],
+          "stats": {
+            "in_count": 449,
+            "out_count": 8837,
+            "tokens": [
+              "Visit https://usdreward.org to claim rewards",
+              "JUSTICE",
+              "FAM",
+              "KEK",
+              "WETH"
+            ],
+            "lifetime": 127695878
+          }
+        },
+        {
+          "id": "0xd9e1ce17f2641f24ae83637ab66a2cca9c378b9f",
+          "name": "0xd9e1ce17...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 3153,
+            "out_count": 2414,
+            "tokens": [
+              "DAI",
+              "WETH",
+              "FTM"
+            ],
+            "lifetime": 14318923
+          }
+        },
+        {
+          "id": "0x5e7c4e64d145085b0d0f131a91987c76e481f5cd",
+          "name": "0x5e7c4e64...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 4394,
+            "out_count": 0,
+            "tokens": [
+              "CASH"
+            ],
+            "lifetime": 11943657
+          }
+        },
+        {
+          "id": "0x976010db5538f0c1daf9f3855b8504721a23e5d4",
+          "name": "0x976010db...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 3780,
+            "out_count": 0,
+            "tokens": [],
+            "lifetime": 2036623
+          }
+        },
+        {
+          "id": "0x709840a3cbf76f6e502703aebeb8eb57bfbf0a5f",
+          "name": "0x709840a3...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 2162,
+            "out_count": 0,
+            "tokens": [
+              "DBB"
+            ],
+            "lifetime": 1235473
+          }
+        },
+        {
+          "id": "0xdf20ac5527567817770efd1e51e7e85669a74d2d",
+          "name": "0xdf20ac55...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 571,
+            "out_count": 755,
+            "tokens": [
+              "FTM"
+            ],
+            "lifetime": 2091896
+          }
+        },
+        {
+          "id": "0x1516c97d44de46481bb762beafbd48ca47f43ac1",
+          "name": "0x1516c97d...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 1103,
+            "out_count": 0,
+            "tokens": [
+              "CASH"
+            ],
+            "lifetime": 814
+          }
+        },
+        {
+          "id": "0x6f5b1dc3ef93c8198d40b36b1d5bc214eb549ad6",
+          "name": "0x6f5b1dc3...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 295,
+            "out_count": 609,
+            "tokens": [
+              "ЕТН",
+              "a1INCH",
+              "st1INCH",
+              "XAI",
+              "USDT"
+            ],
+            "lifetime": 101158164
+          }
+        },
+        {
+          "id": "0x860bd2dba9cd475a61e6d1b45e16c365f6d78f66",
+          "name": "0x860bd2db...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 429,
+            "out_count": 429,
+            "tokens": [
+              "DAI",
+              "WETH",
+              "FTM"
+            ],
+            "lifetime": 14305556
+          }
+        },
+        {
+          "id": "0x1ffc57cada109985ad896a69fbcebd565db4290e",
+          "name": "0x1ffc57ca...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 515,
+            "out_count": 340,
+            "tokens": [
+              "WETH",
+              "FTM"
+            ],
+            "lifetime": 79891479
+          }
+        },
+        {
+          "id": "0x51726fd6e6d264370114d15df83da1e13063fb0f",
+          "name": "0x51726fd6...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 734,
+            "out_count": 0,
+            "tokens": [],
+            "lifetime": 422934
+          }
+        },
+        {
+          "id": "0x0000000000000000000000000000000000000000",
+          "name": "0x00000000...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 689,
+            "out_count": 42,
+            "tokens": [
+              "ZURR",
+              "TKC",
+              "SOB",
+              "BFT",
+              "st1INCH"
+            ],
+            "lifetime": 245974204
+          }
+        },
+        {
+          "id": "0xe33c8e3a0d14a81f0dd7e174830089e82f65fc85",
+          "name": "0xe33c8e3a...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 272,
+            "out_count": 279,
+            "tokens": [
+              "DAI",
+              "WETH"
+            ],
+            "lifetime": 360473
+          }
+        },
+        {
+          "id": "0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71",
+          "name": "0xe069cb01...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 274,
+            "out_count": 167,
+            "tokens": [
+              "WETH",
+              "FTM"
+            ],
+            "lifetime": 2321825
+          }
+        },
+        {
+          "id": "0x728bbe9bbee3af78ad611315076621865950b344",
+          "name": "0x728bbe9b...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 234,
+            "out_count": 203,
+            "tokens": [
+              "DAI",
+              "WETH",
+              "FTM"
+            ],
+            "lifetime": 12187239
+          }
+        },
+        {
+          "id": "0x2e68dfb3f50ea302c88f8db74096d57565d9970a",
+          "name": "0x2e68dfb3...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 407,
+            "out_count": 0,
+            "tokens": [
+              "AMIO"
+            ],
+            "lifetime": 4383514
+          }
+        },
+        {
+          "id": "0xb630d90e3ebe206d2c2a36c060d14812e320862e",
+          "name": "0xb630d90e...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 123,
+            "out_count": 279,
+            "tokens": [
+              "FTM"
+            ],
+            "lifetime": 2096186
+          }
+        },
+        {
+          "id": "0xa694068fdfd382fa60c249e9a2b92a5548ad50ef",
+          "name": "0xa694068f...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 115,
+            "out_count": 258,
+            "tokens": [
+              "DAI"
+            ],
+            "lifetime": 285732
+          }
+        },
+        {
+          "id": "0x2936e27266f9507b575e5fa4fee480d5ea8da54b",
+          "name": "0x2936e272...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 283,
+            "out_count": 78,
+            "tokens": [
+              "MOODENG"
+            ],
+            "lifetime": 34899744
+          }
+        },
+        {
+          "id": "0x7e55174cf66214ea714f634f89e13e126a2bc519",
+          "name": "0x7e55174c...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 350,
+            "out_count": 0,
+            "tokens": [
+              "CASH"
+            ],
+            "lifetime": 0
+          }
+        },
+        {
+          "id": "0xa59a4151a36b8fa01d4d14b7118963393c31d6ae",
+          "name": "0xa59a4151...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 344,
+            "out_count": 0,
+            "tokens": [
+              "CASH"
+            ],
+            "lifetime": 3585
+          }
+        },
+        {
+          "id": "0x03dfb2340c59972065112ba39e296083257c5f6d",
+          "name": "0x03dfb234...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 93,
+            "out_count": 227,
+            "tokens": [
+              "ZURR",
+              "GDO",
+              "VEC",
+              "NIUMC",
+              "ZKJ"
+            ],
+            "lifetime": 219876295
+          }
+        },
+        {
+          "id": "0xf23444084c75b15d76414633abb003d855df4605",
+          "name": "0xf2344408...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 306,
+            "out_count": 0,
+            "tokens": [],
+            "lifetime": 2679227
+          }
+        },
+        {
+          "id": "0x4d246be90c2f36730bb853ad41d0a189061192d3",
+          "name": "0x4d246be9...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 150,
+            "out_count": 149,
+            "tokens": [
+              "WETH",
+              "FTM",
+              "USDT"
+            ],
+            "lifetime": 8930066
+          }
+        },
+        {
+          "id": "0x795065dcc9f64b5614c407a6efdc400da6221fb0",
+          "name": "0x795065dc...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 62,
+            "out_count": 234,
+            "tokens": [
+              "WETH"
+            ],
+            "lifetime": 14300401
+          }
+        },
+        {
+          "id": "0x000000000000006f6502b7f2bbac8c30a3f67e9a",
+          "name": "0x00000000...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 122,
+            "out_count": 122,
+            "tokens": [
+              "DAI",
+              "WETH",
+              "FTM"
+            ],
+            "lifetime": 14302899
+          }
+        },
+        {
+          "id": "0x78a55b9b3bbeffb36a43d9905f654d2769dc55e8",
+          "name": "0x78a55b9b...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 120,
+            "out_count": 120,
+            "tokens": [
+              "DAI",
+              "WETH",
+              "FTM"
+            ],
+            "lifetime": 14295075
+          }
+        },
+        {
+          "id": "0x000000002605006ff4ad30ac969f0726821ebd7c",
+          "name": "0x00000000...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 31,
+            "out_count": 198,
+            "tokens": [
+              "WETH",
+              "FTM"
+            ],
+            "lifetime": 2379515
+          }
+        },
+        {
+          "id": "0x74de5d4fcbf63e00296fd95d33236b9794016631",
+          "name": "0x74de5d4f...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 132,
+            "out_count": 86,
+            "tokens": [
+              "WETH",
+              "1INCH",
+              "FTM",
+              "USDC",
+              "USDT"
+            ],
+            "lifetime": 134198553
+          }
+        },
+        {
+          "id": "0x7da20beeb68f40181418c5e58127ee4e7cd12f62",
+          "name": "0x7da20bee...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 105,
+            "out_count": 105,
+            "tokens": [
+              "DAI",
+              "WETH"
+            ],
+            "lifetime": 255495
+          }
+        },
+        {
+          "id": "0x0000000000007f150bd6f54c40a34d7c3d5e9f56",
+          "name": "0x00000000...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 120,
+            "out_count": 78,
+            "tokens": [
+              "WETH",
+              "FTM"
+            ],
+            "lifetime": 2384111
+          }
+        },
+        {
+          "id": "0x557cfb478a244841590eb96703611be68c3d458b",
+          "name": "0x557cfb47...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 191,
+            "out_count": 0,
+            "tokens": [
+              "CASH"
+            ],
+            "lifetime": 1685
+          }
+        },
+        {
+          "id": "0xdef1c0ded9bec7f1a1670819833240f027b25eff",
+          "name": "0xdef1c0de...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 51,
+            "out_count": 138,
+            "tokens": [
+              "WETH"
+            ],
+            "lifetime": 4767283
+          }
+        },
+        {
+          "id": "0x384bfb7db2e58c02dd68c8d584ba639fe4308704",
+          "name": "0x384bfb7d...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 93,
+            "out_count": 93,
+            "tokens": [
+              "WETH",
+              "FTM"
+            ],
+            "lifetime": 2320075
+          }
+        },
+        {
+          "id": "0x38c6c546049e8f894e78d4c1645088612d923fa3",
+          "name": "0x38c6c546...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 180,
+            "out_count": 0,
+            "tokens": [
+              "CASH"
+            ],
+            "lifetime": 4356
+          }
+        },
+        {
+          "id": "0x31ed1bc96fa75ee33d513a0cef4b65c2500b320b",
+          "name": "0x31ed1bc9...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 176,
+            "out_count": 0,
+            "tokens": [],
+            "lifetime": 8401658
+          }
+        },
+        {
+          "id": "0x00000000553a85582988aa8ad43fb7dda2466bc7",
+          "name": "0x00000000...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 85,
+            "out_count": 86,
+            "tokens": [
+              "DAI",
+              "WETH"
+            ],
+            "lifetime": 352865
+          }
+        },
+        {
+          "id": "0x1519aff03b3e23722511d2576c769a77baf09580",
+          "name": "0x1519aff0...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 167,
+            "out_count": 0,
+            "tokens": [],
+            "lifetime": 3002123
+          }
+        },
+        {
+          "id": "0x2e96ff23d8e1ea53e6fa6581d238d1045f5a98fa",
+          "name": "0x2e96ff23...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 1,
+            "out_count": 166,
+            "tokens": [],
+            "lifetime": 1728240
+          }
+        },
+        {
+          "id": "0xfc3ff9d9abd3abadda68821e443779beb1082f43",
+          "name": "0xfc3ff9d9...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 65,
+            "out_count": 94,
+            "tokens": [
+              "DAI",
+              "WETH",
+              "1INCH",
+              "SAUDIBONK",
+              "FTM"
+            ],
+            "lifetime": 58058016
+          }
+        },
+        {
+          "id": "0x3186aee1ef790d8db79fb0a0f55c8faf217b56bb",
+          "name": "0x3186aee1...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 152,
+            "out_count": 0,
+            "tokens": [
+              "CASH"
+            ],
+            "lifetime": 656
+          }
+        },
+        {
+          "id": "0x03cf40b900971561ac6bd997ef1fe939dcbc95e2",
+          "name": "0x03cf40b9...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 1,
+            "out_count": 138,
+            "tokens": [
+              "CASH",
+              "PLS"
+            ],
+            "lifetime": 1786701
+          }
+        },
+        {
+          "id": "0x1111111254eeb25477b68fb85ed929f73a960582",
+          "name": "0x11111112...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 96,
+            "out_count": 42,
+            "tokens": [
+              "WETH",
+              "TMM",
+              "1INCH",
+              "USDC"
+            ],
+            "lifetime": 39937440
+          }
+        },
+        {
+          "id": "0x759a0dce45820c16d6a1dc20ad5be8469f4b78f9",
+          "name": "0x759a0dce...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 129,
+            "out_count": 8,
+            "tokens": [],
+            "lifetime": 3806344
+          }
+        },
+        {
+          "id": "0x06da0fd433c1a5d7a4faa01111c044910a184553",
+          "name": "0x06da0fd4...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 59,
+            "out_count": 67,
+            "tokens": [
+              "WETH"
+            ],
+            "lifetime": 14311456
+          }
+        },
+        {
+          "id": "0xdf859c9878ef5e742d7bbe3c22a496c088c89fa9",
+          "name": "0xdf859c98...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 123,
+            "out_count": 0,
+            "tokens": [
+              "FIND"
+            ],
+            "lifetime": 3722703
+          }
+        },
+        {
+          "id": "0x397ff1542f962076d0bfe58ea045ffa2d347aca0",
+          "name": "0x397ff154...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 48,
+            "out_count": 74,
+            "tokens": [
+              "WETH"
+            ],
+            "lifetime": 14306521
+          }
+        },
+        {
+          "id": "0xfe744aef67324ccb15819206c3d91f2e58d53e4e",
+          "name": "0xfe744aef...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 56,
+            "out_count": 62,
+            "tokens": [
+              "FTM"
+            ],
+            "lifetime": 2052780
+          }
+        },
+        {
+          "id": "0x11e52c75998fe2e7928b191bfc5b25937ca16741",
+          "name": "0x11e52c75...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 111,
+            "out_count": 0,
+            "tokens": [
+              "CASH"
+            ],
+            "lifetime": 1553
+          }
+        },
+        {
+          "id": "0xaed5d0c25ec30283dae4ba512dd249d468323660",
+          "name": "0xaed5d0c2...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 111,
+            "out_count": 0,
+            "tokens": [
+              "CASH"
+            ],
+            "lifetime": 335
+          }
+        },
+        {
+          "id": "0xb279cba3d96550695a5f7da93dd34f274a1965d1",
+          "name": "0xb279cba3...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 111,
+            "out_count": 0,
+            "tokens": [
+              "CASH"
+            ],
+            "lifetime": 0
+          }
+        },
+        {
+          "id": "0x2c33f5fde437ad4c1de85d5d5cb864921ab583af",
+          "name": "0x2c33f5fd...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 109,
+            "out_count": 0,
+            "tokens": [],
+            "lifetime": 3704081
+          }
+        },
+        {
+          "id": "0x6c8cd781b338288491fbd089f36f254df71684c2",
+          "name": "0x6c8cd781...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 107,
+            "out_count": 0,
+            "tokens": [
+              "CASH"
+            ],
+            "lifetime": 1034
+          }
+        },
+        {
+          "id": "0xedf4599ab0e83be9f51ca6eb33c5283776e7856d",
+          "name": "0xedf4599a...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 102,
+            "out_count": 0,
+            "tokens": [
+              "CASH"
+            ],
+            "lifetime": 576
+          }
+        },
+        {
+          "id": "0xf2da8b05f3a9d20e3331326ee48d19a21842dfeb",
+          "name": "0xf2da8b05...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 101,
+            "out_count": 0,
+            "tokens": [
+              "CASH"
+            ],
+            "lifetime": 1387
+          }
+        },
+        {
+          "id": "0x8335ec1d5789c25be9c236bd590b60d66b941423",
+          "name": "0x8335ec1d...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 100,
+            "out_count": 0,
+            "tokens": [
+              "CASH"
+            ],
+            "lifetime": 0
+          }
+        },
+        {
+          "id": "0xa25979e9150a8ab187b7db0fccd3d0ea0e7aa03a",
+          "name": "0xa25979e9...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 98,
+            "out_count": 0,
+            "tokens": [
+              "USDT"
+            ],
+            "lifetime": 648594
+          }
+        },
+        {
+          "id": "0x806bed348a75650799ae9fb06a766435e3d4444e",
+          "name": "0x806bed34...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 96,
+            "out_count": 0,
+            "tokens": [
+              "CASH"
+            ],
+            "lifetime": 1338
+          }
+        },
+        {
+          "id": "0x91d76d31080ca88339a4e506affb4ded4b192bcb",
+          "name": "0x91d76d31...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 25,
+            "out_count": 71,
+            "tokens": [
+              "LOVE",
+              "ETHf",
+              "1INCH",
+              "MNT",
+              "MATIC"
+            ],
+            "lifetime": 129320403
+          }
+        },
+        {
+          "id": "0xe1fd7cb1a330c48cc0a09d31f0786b61bfc43f71",
+          "name": "0xe1fd7cb1...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 94,
+            "out_count": 0,
+            "tokens": [],
+            "lifetime": 3951774
+          }
+        },
+        {
+          "id": "0x458f71f8941ff4ae717113d101e08eae6ba034b9",
+          "name": "0x458f71f8...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 38,
+            "out_count": 55,
+            "tokens": [
+              "v1INCH",
+              "1INCH",
+              "USDT"
+            ],
+            "lifetime": 47921916
+          }
+        },
+        {
+          "id": "0xed86b5962a1a73afad7181f0b3e427a93ce8e552",
+          "name": "0xed86b596...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 90,
+            "out_count": 0,
+            "tokens": [
+              "CASH"
+            ],
+            "lifetime": 1044
+          }
+        },
+        {
+          "id": "0xef189cfbbf4bc4fdf9b04a1163d47bf4e3250526",
+          "name": "0xef189cfb...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 4,
+            "out_count": 83,
+            "tokens": [
+              "VEC"
+            ],
+            "lifetime": 720576
+          }
+        },
+        {
+          "id": "0x185f2a8775822e124aff8aa9f1de4a142c85a381",
+          "name": "0x185f2a87...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 84,
+            "out_count": 0,
+            "tokens": [],
+            "lifetime": 5074742
+          }
+        },
+        {
+          "id": "0x8baed8fd7fc228781a95e7d6e57c3e430d2be6f9",
+          "name": "0x8baed8fd...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 21,
+            "out_count": 63,
+            "tokens": [
+              "CAD Coin",
+              "MDC",
+              "AMIO",
+              "MC",
+              "HGC"
+            ],
+            "lifetime": 15939965
+          }
+        },
+        {
+          "id": "0xee6232ce469f9398e49609d13910daa7a716c2c7",
+          "name": "0xee6232ce...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 84,
+            "out_count": 0,
+            "tokens": [],
+            "lifetime": 634177
+          }
+        },
+        {
+          "id": "0x1aa4e6432e4cebfd90b2abfa05ee8329ec594aa9",
+          "name": "0x1aa4e643...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 0,
+            "out_count": 83,
+            "tokens": [
+              "HGS"
+            ],
+            "lifetime": 1028773
+          }
+        },
+        {
+          "id": "0x393e0000cc906900d800a91b9830380028eebfc6",
+          "name": "0x393e0000...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 35,
+            "out_count": 48,
+            "tokens": [
+              "WETH"
+            ],
+            "lifetime": 1299975
+          }
+        },
+        {
+          "id": "0xe6b75a1960f91bfa7010dec8543685ead67f8cff",
+          "name": "0xe6b75a19...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 82,
+            "out_count": 0,
+            "tokens": [],
+            "lifetime": 1111321
+          }
+        },
+        {
+          "id": "0x111111125421ca6dc452d289314280a0f8842a65",
+          "name": "0x11111112...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 41,
+            "out_count": 37,
+            "tokens": [
+              "WETH",
+              "LINK",
+              "AAVE",
+              "1INCH",
+              "XAI"
+            ],
+            "lifetime": 49412244
+          }
+        },
+        {
+          "id": "0xb89eb49bc337d2bfaee360ec63ad606b6788ceb2",
+          "name": "0xb89eb49b...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 77,
+            "out_count": 0,
+            "tokens": [
+              "USDT"
+            ],
+            "lifetime": 749632
+          }
+        },
+        {
+          "id": "0xb4499ad98b645ab277443840e331e915dbeb59f5",
+          "name": "0xb4499ad9...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 75,
+            "out_count": 0,
+            "tokens": [
+              "USDT"
+            ],
+            "lifetime": 627726
+          }
+        },
+        {
+          "id": "0xc68c17e0280240b56044d0dd129bfae51a4cc3e4",
+          "name": "0xc68c17e0...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 0,
+            "out_count": 74,
+            "tokens": [
+              "FAILED"
+            ],
+            "lifetime": 6863364
+          }
+        },
+        {
+          "id": "0xf443253607dbde5bda77c358c9b9f244d819e25c",
+          "name": "0xf4432536...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 37,
+            "out_count": 37,
+            "tokens": [
+              "DAI",
+              "WETH"
+            ],
+            "lifetime": 355249
+          }
+        },
+        {
+          "id": "0x850e8f0e5b83750b1881bf5b50d37f1c73f4aeaf",
+          "name": "0x850e8f0e...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 35,
+            "out_count": 35,
+            "tokens": [
+              "DAI",
+              "WETH"
+            ],
+            "lifetime": 322787
+          }
+        },
+        {
+          "id": "0xa2b2953b35971d7f85cbe38b7dc9c42e8b1adef4",
+          "name": "0xa2b2953b...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 68,
+            "out_count": 0,
+            "tokens": [],
+            "lifetime": 485812
+          }
+        },
+        {
+          "id": "0x58959e0c71080434f237bd42d07cd84b74cef438",
+          "name": "0x58959e0c...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 67,
+            "out_count": 0,
+            "tokens": [],
+            "lifetime": 1212753
+          }
+        },
+        {
+          "id": "0x088ee5007c98a9677165d78dd2109ae4a3d04d0c",
+          "name": "0x088ee500...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 44,
+            "out_count": 22,
+            "tokens": [
+              "WETH"
+            ],
+            "lifetime": 14294278
+          }
+        },
+        {
+          "id": "0x47ed0262a0b688dcb836d254c6a2e96b6c48a9f5",
+          "name": "0x47ed0262...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 0,
+            "out_count": 66,
+            "tokens": [
+              "DAI",
+              "WETH"
+            ],
+            "lifetime": 362876
+          }
+        },
+        {
+          "id": "0x1964e1202a4f227cbbae176b54af3209ea49b1ad",
+          "name": "0x1964e120...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 64,
+            "out_count": 0,
+            "tokens": [
+              "CASH"
+            ],
+            "lifetime": 1571
+          }
+        },
+        {
+          "id": "0x5f8215ebdd9766303c08d1a09ee08439d1f158b8",
+          "name": "0x5f8215eb...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 0,
+            "out_count": 63,
+            "tokens": [],
+            "lifetime": 6854388
+          }
+        },
+        {
+          "id": "0xe2d83239393b985c708e96476626f663493a85ac",
+          "name": "0xe2d83239...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 0,
+            "out_count": 61,
+            "tokens": [],
+            "lifetime": 4756594
+          }
+        },
+        {
+          "id": "0x2f7f1e689a6a5d37fcfcf21417f7cc2f9addc5a2",
+          "name": "0x2f7f1e68...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 60,
+            "out_count": 0,
+            "tokens": [
+              "CASH"
+            ],
+            "lifetime": 419
+          }
+        },
+        {
+          "id": "0x12ba0823f29d674fbfe844e40f6ba54a07af44d7",
+          "name": "0x12ba0823...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 0,
+            "out_count": 60,
+            "tokens": [
+              "DAI"
+            ],
+            "lifetime": 229429
+          }
+        },
+        {
+          "id": "0xd57e815249253e4f4914e0bec16b5a1046dde303",
+          "name": "0xd57e8152...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 58,
+            "out_count": 0,
+            "tokens": [],
+            "lifetime": 8425230
+          }
+        },
+        {
+          "id": "0x9785c3b2e11972b0a8cd8133c58684cee2a9e5bc",
+          "name": "0x9785c3b2...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 21,
+            "out_count": 35,
+            "tokens": [
+              "SOB",
+              "BFT",
+              "MAC",
+              "VGS",
+              "XBD"
+            ],
+            "lifetime": 51183064
+          }
+        },
+        {
+          "id": "0xa38b7ee9df79955b90cc4e2de90421f6baa83a3d",
+          "name": "0xa38b7ee9...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 56,
+            "out_count": 0,
+            "tokens": [],
+            "lifetime": 2827633
+          }
+        },
+        {
+          "id": "0x22f9dcf4647084d6c31b2765f6910cd85c178c18",
+          "name": "0x22f9dcf4...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 46,
+            "out_count": 10,
+            "tokens": [
+              "DAI",
+              "WETH",
+              "FTM"
+            ],
+            "lifetime": 14296631
+          }
+        },
+        {
+          "id": "0x4642d9d9a434134cb005222ea1422e1820508d7b",
+          "name": "0x4642d9d9...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 55,
+            "out_count": 0,
+            "tokens": [
+              "CASH"
+            ],
+            "lifetime": 117
+          }
+        },
+        {
+          "id": "0xd4667c4fc17a41e5da5b196dee81aa116823fc05",
+          "name": "0xd4667c4f...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 13,
+            "out_count": 41,
+            "tokens": [
+              "WETH",
+              "FTM"
+            ],
+            "lifetime": 1159536
+          }
+        },
+        {
+          "id": "0xd0ca12e5d73c5780c0ec7410b4b8f0820457979e",
+          "name": "0xd0ca12e5...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 28,
+            "out_count": 26,
+            "tokens": [
+              "WETH"
+            ],
+            "lifetime": 887150
+          }
+        },
+        {
+          "id": "0xf0c0d2d0d6a5e6da997e35a8121ee6217897a2aa",
+          "name": "0xf0c0d2d0...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 27,
+            "out_count": 27,
+            "tokens": [
+              "DAI",
+              "WETH"
+            ],
+            "lifetime": 66883
+          }
+        },
+        {
+          "id": "0xa90f4cb2b7cceb60bc4ac1343a1fa46caf57d937",
+          "name": "0xa90f4cb2...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 53,
+            "out_count": 0,
+            "tokens": [
+              "CASH"
+            ],
+            "lifetime": 558
+          }
+        },
+        {
+          "id": "0xd58549ab5b4ab89223d8de4e2cb52ff356d201dc",
+          "name": "0xd58549ab...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 53,
+            "out_count": 0,
+            "tokens": [
+              "LDS"
+            ],
+            "lifetime": 2207614
+          }
+        },
+        {
+          "id": "0x63e0fbb150fd016714be00051d729f32a5295d39",
+          "name": "0x63e0fbb1...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 24,
+            "out_count": 29,
+            "tokens": [
+              "WETH"
+            ],
+            "lifetime": 2232353
+          }
+        },
+        {
+          "id": "0x58dc5a51fe44589beb22e8ce67720b5bc5378009",
+          "name": "0x58dc5a51...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 6,
+            "out_count": 47,
+            "tokens": [
+              "WETH"
+            ],
+            "lifetime": 12815866
+          }
+        },
+        {
+          "id": "0x0ded73d48e190fd12da7cf58893e279fb11384bc",
+          "name": "0x0ded73d4...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 52,
+            "out_count": 0,
+            "tokens": [],
+            "lifetime": 342430
+          }
+        },
+        {
+          "id": "0xc5556cc5e27d3ce9db3ab89e08d29af050954a63",
+          "name": "0xc5556cc5...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 26,
+            "out_count": 26,
+            "tokens": [
+              "WETH",
+              "FTM"
+            ],
+            "lifetime": 1052786
+          }
+        },
+        {
+          "id": "0xdf40c333f87cc4db4c210f7114d9c29d178d67f0",
+          "name": "0xdf40c333...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 26,
+            "out_count": 26,
+            "tokens": [
+              "DAI",
+              "WETH"
+            ],
+            "lifetime": 336069
+          }
+        },
+        {
+          "id": "0x9e0ff9e18bd20b3d1228acf0d71eb784112c2db2",
+          "name": "0x9e0ff9e1...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 0,
+            "out_count": 51,
+            "tokens": [
+              "HGS"
+            ],
+            "lifetime": 297403
+          }
+        },
+        {
+          "id": "0xc66c7e90be936baf0bf985f702c430d006796699",
+          "name": "0xc66c7e90...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 50,
+            "out_count": 0,
+            "tokens": [
+              "CASH"
+            ],
+            "lifetime": 0
+          }
+        },
+        {
+          "id": "0x73c0ae50756c7921d1f32ada71b8e50c5de7ff9c",
+          "name": "0x73c0ae50...",
+          "color": "#64748b",
+          "size": 50,
+          "labels": [],
+          "stats": {
+            "in_count": 25,
+            "out_count": 25,
+            "tokens": [
+              "DAI",
+              "WETH"
+            ],
+            "lifetime": 231589
+          }
+        },
+        {
+          "id": "0x7963c8c3429b9e3ab655f13b7272106ab815787f",
+          "name": "0x7963c8c3...",
+          "color": "#64748b",
+          "size": 49,
+          "labels": [],
+          "stats": {
+            "in_count": 49,
+            "out_count": 0,
+            "tokens": [],
+            "lifetime": 8317658
+          }
+        },
+        {
+          "id": "0xda2e0aa8f697db190c32034894cf9731f6619960",
+          "name": "0xda2e0aa8...",
+          "color": "#64748b",
+          "size": 49,
+          "labels": [],
+          "stats": {
+            "in_count": 49,
+            "out_count": 0,
+            "tokens": [],
+            "lifetime": 4395406
+          }
+        },
+        {
+          "id": "0x8bb7872b8b36b4881154091ded3d6d9ac87ce9f5",
+          "name": "0x8bb7872b...",
+          "color": "#64748b",
+          "size": 49,
+          "labels": [],
+          "stats": {
+            "in_count": 49,
+            "out_count": 0,
+            "tokens": [],
+            "lifetime": 2674641
+          }
+        },
+        {
+          "id": "0xc27b8c209634fa091f5fd4848f07da11e532ff51",
+          "name": "0xc27b8c20...",
+          "color": "#64748b",
+          "size": 49,
+          "labels": [],
+          "stats": {
+            "in_count": 24,
+            "out_count": 25,
+            "tokens": [
+              "FTM"
+            ],
+            "lifetime": 2121391
+          }
+        },
+        {
+          "id": "0x443d1236439f43d4ab81b16534affb4522506615",
+          "name": "0x443d1236...",
+          "color": "#64748b",
+          "size": 48,
+          "labels": [],
+          "stats": {
+            "in_count": 15,
+            "out_count": 33,
+            "tokens": [
+              "WETH"
+            ],
+            "lifetime": 848877
+          }
+        },
+        {
+          "id": "0x5235f93966d534e188531e75904cc82baf370b26",
+          "name": "0x5235f939...",
+          "color": "#64748b",
+          "size": 45,
+          "labels": [],
+          "stats": {
+            "in_count": 0,
+            "out_count": 45,
+            "tokens": [],
+            "lifetime": 2388576
+          }
+        },
+        {
+          "id": "0x5b5a353fc217ebef77bc7686ea05a003ebdb7d1a",
+          "name": "0x5b5a353f...",
+          "color": "#64748b",
+          "size": 45,
+          "labels": [],
+          "stats": {
+            "in_count": 45,
+            "out_count": 0,
+            "tokens": [],
+            "lifetime": 5568884
+          }
+        },
+        {
+          "id": "0xc56128cee80812c42ad196b04810d65b988a79e5",
+          "name": "0xc56128ce...",
+          "color": "#64748b",
+          "size": 45,
+          "labels": [],
+          "stats": {
+            "in_count": 31,
+            "out_count": 14,
+            "tokens": [
+              "1INCH",
+              "GAGA",
+              "USDC",
+              "USDT",
+              "SHI"
+            ],
+            "lifetime": 89254080
+          }
+        },
+        {
+          "id": "0x3700006fbcde59a8b3af2c134d00e9530000e379",
+          "name": "0x3700006f...",
+          "color": "#64748b",
+          "size": 43,
+          "labels": [],
+          "stats": {
+            "in_count": 21,
+            "out_count": 22,
+            "tokens": [
+              "WETH"
+            ],
+            "lifetime": 936193
+          }
+        },
+        {
+          "id": "0xe93cbcd749a0a6bdba4177bd78842bd5f1a0bd10",
+          "name": "0xe93cbcd7...",
+          "color": "#64748b",
+          "size": 42,
+          "labels": [],
+          "stats": {
+            "in_count": 42,
+            "out_count": 0,
+            "tokens": [],
+            "lifetime": 668335
+          }
+        },
+        {
+          "id": "0x111111111117dc0aa78b770fa6a738034120c302",
+          "name": "0x11111111...",
+          "color": "#64748b",
+          "size": 42,
+          "labels": [],
+          "stats": {
+            "in_count": 42,
+            "out_count": 0,
+            "tokens": [],
+            "lifetime": 87112572
+          }
+        },
+        {
+          "id": "0x000000000a2daefe11b26dcdaecde7d33ad03e9d",
+          "name": "0x00000000...",
+          "color": "#64748b",
+          "size": 42,
+          "labels": [],
+          "stats": {
+            "in_count": 25,
+            "out_count": 17,
+            "tokens": [
+              "WETH"
+            ],
+            "lifetime": 2202742
+          }
+        },
+        {
+          "id": "0x955e01951a9b44598d9a836a06b6381ad9929c8c",
+          "name": "0x955e0195...",
+          "color": "#64748b",
+          "size": 41,
+          "labels": [],
+          "stats": {
+            "in_count": 41,
+            "out_count": 0,
+            "tokens": [],
+            "lifetime": 458525
+          }
+        },
+        {
+          "id": "0xb3c839dbde6b96d37c56ee4f9dad3390d49310aa",
+          "name": "0xb3c839db...",
+          "color": "#64748b",
+          "size": 41,
+          "labels": [],
+          "stats": {
+            "in_count": 26,
+            "out_count": 15,
+            "tokens": [
+              "1INCH",
+              "USDC",
+              "USDT",
+              "DAI",
+              "WETH"
+            ],
+            "lifetime": 74922836
+          }
+        },
+        {
+          "id": "0xe26c5444b3cc913d8d62818bf4b800ad3c1f18c0",
+          "name": "0xe26c5444...",
+          "color": "#64748b",
+          "size": 40,
+          "labels": [],
+          "stats": {
+            "in_count": 0,
+            "out_count": 40,
+            "tokens": [
+              "DBB"
+            ],
+            "lifetime": 844771
+          }
+        },
+        {
+          "id": "0xf3c54b78e542cb6e089b44e294ba7c7b8361d7ab",
+          "name": "0xf3c54b78...",
+          "color": "#64748b",
+          "size": 40,
+          "labels": [],
+          "stats": {
+            "in_count": 6,
+            "out_count": 34,
+            "tokens": [
+              "DBB"
+            ],
+            "lifetime": 763082
+          }
+        },
+        {
+          "id": "0x97f0b8d84194f1b1c57655e0dcc8ee6af1d6248d",
+          "name": "0x97f0b8d8...",
+          "color": "#64748b",
+          "size": 40,
+          "labels": [],
+          "stats": {
+            "in_count": 40,
+            "out_count": 0,
+            "tokens": [
+              "FTM"
+            ],
+            "lifetime": 2176712
+          }
+        },
+        {
+          "id": "0x00000000000017c75025d397b91d284bbe8fc7f2",
+          "name": "0x00000000...",
+          "color": "#64748b",
+          "size": 40,
+          "labels": [],
+          "stats": {
+            "in_count": 20,
+            "out_count": 20,
+            "tokens": [
+              "WETH",
+              "FTM"
+            ],
+            "lifetime": 2183786
+          }
+        },
+        {
+          "id": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+          "name": "0xdac17f95...",
+          "color": "#64748b",
+          "size": 39,
+          "labels": [],
+          "stats": {
+            "in_count": 39,
+            "out_count": 0,
+            "tokens": [],
+            "lifetime": 196143084
+          }
+        },
+        {
+          "id": "0xc0cf2cbd0c6bb1da4c671fbb07d40e88676dbe82",
+          "name": "0xc0cf2cbd...",
+          "color": "#64748b",
+          "size": 39,
+          "labels": [],
+          "stats": {
+            "in_count": 26,
+            "out_count": 13,
+            "tokens": [
+              "DAI",
+              "WETH",
+              "SLP"
+            ],
+            "lifetime": 77169
+          }
+        },
+        {
+          "id": "0xca176a8ac234446b2561293db7543e0cdadc6627",
+          "name": "0xca176a8a...",
+          "color": "#64748b",
+          "size": 37,
+          "labels": [],
+          "stats": {
+            "in_count": 37,
+            "out_count": 0,
+            "tokens": [],
+            "lifetime": 7935327
+          }
+        },
+        {
+          "id": "0x744d70fdbe2ba4cf95131626614a1763df805b9e",
+          "name": "0x744d70fd...",
+          "color": "#64748b",
+          "size": 36,
+          "labels": [],
+          "stats": {
+            "in_count": 36,
+            "out_count": 0,
+            "tokens": [],
+            "lifetime": 8440290
+          }
+        },
+        {
+          "id": "0xfe7f0897239ce9cc6645d9323e6fe428591b821c",
+          "name": "0xfe7f0897...",
+          "color": "#64748b",
+          "size": 36,
+          "labels": [],
+          "stats": {
+            "in_count": 15,
+            "out_count": 21,
+            "tokens": [
+              "WETH"
+            ],
+            "lifetime": 2161648
+          }
+        },
+        {
+          "id": "0x0899c6a2b0a84acbf6d3c79efb7c444a3ee11c4d",
+          "name": "0x0899c6a2...",
+          "color": "#64748b",
+          "size": 36,
+          "labels": [],
+          "stats": {
+            "in_count": 15,
+            "out_count": 21,
+            "tokens": [
+              "FTM"
+            ],
+            "lifetime": 2141238
+          }
+        },
+        {
+          "id": "0x323b7f37d382a68b0195b873af17cea5b67cd595",
+          "name": "0x323b7f37...",
+          "color": "#64748b",
+          "size": 36,
+          "labels": [],
+          "stats": {
+            "in_count": 18,
+            "out_count": 18,
+            "tokens": [
+              "FTM"
+            ],
+            "lifetime": 2109849
+          }
+        },
+        {
+          "id": "0x5dfadad1f2b6bb502cea3f1714d1cff6fd4fae83",
+          "name": "0x5dfadad1...",
+          "color": "#64748b",
+          "size": 36,
+          "labels": [],
+          "stats": {
+            "in_count": 36,
+            "out_count": 0,
+            "tokens": [],
+            "lifetime": 120926
+          }
+        },
+        {
+          "id": "0xe70dbeb13a8a4c67162aecd46967cd2762238ec4",
+          "name": "0xe70dbeb1...",
+          "color": "#64748b",
+          "size": 35,
+          "labels": [],
+          "stats": {
+            "in_count": 0,
+            "out_count": 35,
+            "tokens": [
+              "DBB"
+            ],
+            "lifetime": 788123
+          }
+        },
+        {
+          "id": "0xe086a9f63c184a90ac3a9dd62782b082724b45b1",
+          "name": "0xe086a9f6...",
+          "color": "#64748b",
+          "size": 35,
+          "labels": [],
+          "stats": {
+            "in_count": 9,
+            "out_count": 26,
+            "tokens": [
+              "FTM"
+            ],
+            "lifetime": 2253964
+          }
+        },
+        {
+          "id": "0x9bf2c31b0b7a24f3d3e912718b9e511ddd787623",
+          "name": "0x9bf2c31b...",
+          "color": "#64748b",
+          "size": 35,
+          "labels": [],
+          "stats": {
+            "in_count": 35,
+            "out_count": 0,
+            "tokens": [
+              "USDT"
+            ],
+            "lifetime": 99950
+          }
+        },
+        {
+          "id": "0x070b71d3eba1956a90253496c82a7948eb7ef28f",
+          "name": "0x070b71d3...",
+          "color": "#64748b",
+          "size": 34,
+          "labels": [],
+          "stats": {
+            "in_count": 34,
+            "out_count": 0,
+            "tokens": [
+              "CASH"
+            ],
+            "lifetime": 226
+          }
+        },
+        {
+          "id": "0x7c66550c9c730b6fdd4c03bc2e73c5462c5f7acc",
+          "name": "0x7c66550c...",
+          "color": "#64748b",
+          "size": 33,
+          "labels": [],
+          "stats": {
+            "in_count": 33,
+            "out_count": 0,
+            "tokens": [
+              "DAI"
+            ],
+            "lifetime": 225950
+          }
+        },
+        {
+          "id": "0xa2a6633098626db845df93eeed07c2a58cbc5948",
+          "name": "0xa2a66330...",
+          "color": "#64748b",
+          "size": 32,
+          "labels": [],
+          "stats": {
+            "in_count": 0,
+            "out_count": 32,
+            "tokens": [
+              "DBB"
+            ],
+            "lifetime": 798642
+          }
+        },
+        {
+          "id": "0x83cd320c2ed825201526bd34906dab88a4656b08",
+          "name": "0x83cd320c...",
+          "color": "#64748b",
+          "size": 32,
+          "labels": [],
+          "stats": {
+            "in_count": 16,
+            "out_count": 16,
+            "tokens": [
+              "WETH",
+              "FTM"
+            ],
+            "lifetime": 639254
+          }
+        },
+        {
+          "id": "0x00000000cd47aa64daf64f5144b0d7885754374c",
+          "name": "0x00000000...",
+          "color": "#64748b",
+          "size": 32,
+          "labels": [],
+          "stats": {
+            "in_count": 16,
+            "out_count": 16,
+            "tokens": [
+              "WETH",
+              "FTM"
+            ],
+            "lifetime": 303232
+          }
+        },
+        {
+          "id": "0x1cce689c17ccafd692a38d8f7e768171cb99f36b",
+          "name": "0x1cce689c...",
+          "color": "#64748b",
+          "size": 31,
+          "labels": [],
+          "stats": {
+            "in_count": 31,
+            "out_count": 0,
+            "tokens": [
+              "CASH"
+            ],
+            "lifetime": 1450
+          }
+        },
+        {
+          "id": "0xf8cbfe72de95494aaa5f2b9aded057c0d6eaf7a9",
+          "name": "0xf8cbfe72...",
+          "color": "#64748b",
+          "size": 31,
+          "labels": [],
+          "stats": {
+            "in_count": 0,
+            "out_count": 31,
+            "tokens": [
+              "DBB"
+            ],
+            "lifetime": 679591
+          }
+        },
+        {
+          "id": "0xf1f85b2c54a2bd284b1cf4141d64fd171bd85539",
+          "name": "0xf1f85b2c...",
+          "color": "#64748b",
+          "size": 31,
+          "labels": [],
+          "stats": {
+            "in_count": 17,
+            "out_count": 14,
+            "tokens": [
+              "WETH"
+            ],
+            "lifetime": 14285189
+          }
+        },
+        {
+          "id": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+          "name": "0xa0b86991...",
+          "color": "#64748b",
+          "size": 30,
+          "labels": [],
+          "stats": {
+            "in_count": 28,
+            "out_count": 2,
+            "tokens": [
+              "Visit https://usdreward.org to claim rewards",
+              "Visit https://get-usdc.org to claim rewards"
+            ],
+            "lifetime": 134558481
+          }
+        },
+        {
+          "id": "0xe4ae2a2c98a700f4ea17dba64e90d9d6897ee516",
+          "name": "0xe4ae2a2c...",
+          "color": "#64748b",
+          "size": 30,
+          "labels": [],
+          "stats": {
+            "in_count": 0,
+            "out_count": 30,
+            "tokens": [
+              "HGS"
+            ],
+            "lifetime": 926929
+          }
+        },
+        {
+          "id": "0xeb5d3a91b5e721fa251e03bda2c9578e90f30f84",
+          "name": "0xeb5d3a91...",
+          "color": "#64748b",
+          "size": 30,
+          "labels": [],
+          "stats": {
+            "in_count": 15,
+            "out_count": 15,
+            "tokens": [
+              "WETH",
+              "FTM"
+            ],
+            "lifetime": 2115886
+          }
+        },
+        {
+          "id": "0x059fa08430cedc9edc185974c1b6e4e6317e4945",
+          "name": "0x059fa084...",
+          "color": "#64748b",
+          "size": 29,
+          "labels": [],
+          "stats": {
+            "in_count": 8,
+            "out_count": 21,
+            "tokens": [
+              "CAD Coin",
+              "ZRX",
+              "GNT",
+              "HDW",
+              "SNT"
+            ],
+            "lifetime": 351999
+          }
+        },
+        {
+          "id": "0x4172b78a86695bbfabd4d319323ae0a696cf9f2a",
+          "name": "0x4172b78a...",
+          "color": "#64748b",
+          "size": 29,
+          "labels": [],
+          "stats": {
+            "in_count": 29,
+            "out_count": 0,
+            "tokens": [
+              "WETH",
+              "FTM"
+            ],
+            "lifetime": 1159536
+          }
+        },
+        {
+          "id": "0x8ea2c3d97390572f760d1ff967d3cfa5e3345a99",
+          "name": "0x8ea2c3d9...",
+          "color": "#64748b",
+          "size": 28,
+          "labels": [],
+          "stats": {
+            "in_count": 28,
+            "out_count": 0,
+            "tokens": [
+              "CASH"
+            ],
+            "lifetime": 5944
+          }
+        },
+        {
+          "id": "0x3f4affe54e00e51b526ed1d7e33ff7783069e89f",
+          "name": "0x3f4affe5...",
+          "color": "#64748b",
+          "size": 28,
+          "labels": [],
+          "stats": {
+            "in_count": 14,
+            "out_count": 14,
+            "tokens": [
+              "WETH",
+              "FTM"
+            ],
+            "lifetime": 268039
+          }
+        },
+        {
+          "id": "0xb11e847b26b11acc104ec630ee2cf603c78f59d2",
+          "name": "0xb11e847b...",
+          "color": "#64748b",
+          "size": 27,
+          "labels": [],
+          "stats": {
+            "in_count": 27,
+            "out_count": 0,
+            "tokens": [
+              "OMG",
+              "ZRX",
+              "GNT",
+              "SNT",
+              "BAT"
+            ],
+            "lifetime": 7256695
+          }
+        },
+        {
+          "id": "0x65a440c906107bad4dc56b32abf1959ac64384fa",
+          "name": "0x65a440c9...",
+          "color": "#64748b",
+          "size": 27,
+          "labels": [],
+          "stats": {
+            "in_count": 0,
+            "out_count": 27,
+            "tokens": [
+              "DBB"
+            ],
+            "lifetime": 1438422
+          }
+        },
+        {
+          "id": "0x2ab26a16e7f6e1e331254bd6708797635f2a6e0e",
+          "name": "0x2ab26a16...",
+          "color": "#64748b",
+          "size": 27,
+          "labels": [],
+          "stats": {
+            "in_count": 7,
+            "out_count": 20,
+            "tokens": [
+              "FTM"
+            ],
+            "lifetime": 1619741
+          }
+        },
+        {
+          "id": "0x24d354b24a6ab7a5ea94dd9bad7a4a25f773a1a9",
+          "name": "0x24d354b2...",
+          "color": "#64748b",
+          "size": 27,
+          "labels": [],
+          "stats": {
+            "in_count": 0,
+            "out_count": 27,
+            "tokens": [
+              "DAI",
+              "SLP"
+            ],
+            "lifetime": 1671003
+          }
+        },
+        {
+          "id": "0x5a5444f6b5d511f61ff7c3152054d4030f3891ca",
+          "name": "0x5a5444f6...",
+          "color": "#64748b",
+          "size": 26,
+          "labels": [],
+          "stats": {
+            "in_count": 0,
+            "out_count": 26,
+            "tokens": [],
+            "lifetime": 17679
+          }
+        },
+        {
+          "id": "0xcb2286d9471cc185281c4f763d34a962ed212962",
+          "name": "0xcb2286d9...",
+          "color": "#64748b",
+          "size": 26,
+          "labels": [],
+          "stats": {
+            "in_count": 19,
+            "out_count": 7,
+            "tokens": [
+              "WETH"
+            ],
+            "lifetime": 13134611
+          }
+        },
+        {
+          "id": "0x80e1fa3dfb3eef72c89d909137489c6ce328f5a6",
+          "name": "0x80e1fa3d...",
+          "color": "#64748b",
+          "size": 25,
+          "labels": [],
+          "stats": {
+            "in_count": 25,
+            "out_count": 0,
+            "tokens": [
+              "ZRX",
+              "SNT",
+              "OMG"
+            ],
+            "lifetime": 6300482
+          }
+        },
+        {
+          "id": "0x7d92ad7e1b6ae22c6a43283af3856028cd3d856a",
+          "name": "0x7d92ad7e...",
+          "color": "#64748b",
+          "size": 25,
+          "labels": [],
+          "stats": {
+            "in_count": 12,
+            "out_count": 13,
+            "tokens": [
+              "FTM"
+            ],
+            "lifetime": 2163432
+          }
+        },
+        {
+          "id": "0x9d11561383b122c419b59bbd3be2f755425a97ab",
+          "name": "0x9d115613...",
+          "color": "#64748b",
+          "size": 25,
+          "labels": [],
+          "stats": {
+            "in_count": 25,
+            "out_count": 0,
+            "tokens": [
+              "USDT"
+            ],
+            "lifetime": 293522
+          }
+        },
+        {
+          "id": "0x6fa63f9b452a97d2df921378197570f9c04ea286",
+          "name": "0x6fa63f9b...",
+          "color": "#64748b",
+          "size": 24,
+          "labels": [],
+          "stats": {
+            "in_count": 24,
+            "out_count": 0,
+            "tokens": [],
+            "lifetime": 3339337
+          }
+        },
+        {
+          "id": "0xfe86c2b4963cbdd09c919bd62af384eb49b5765e",
+          "name": "0xfe86c2b4...",
+          "color": "#64748b",
+          "size": 24,
+          "labels": [],
+          "stats": {
+            "in_count": 24,
+            "out_count": 0,
+            "tokens": [
+              "LDS"
+            ],
+            "lifetime": 2189468
+          }
+        },
+        {
+          "id": "0x34f3035e5f4e5cb2abc364f2b261eb85bc7ccb9d",
+          "name": "0x34f3035e...",
+          "color": "#64748b",
+          "size": 24,
+          "labels": [],
+          "stats": {
+            "in_count": 8,
+            "out_count": 16,
+            "tokens": [
+              "DBB"
+            ],
+            "lifetime": 838870
+          }
+        },
+        {
+          "id": "0xdd3136332ee31538cd7751de88ad89e02526fff3",
+          "name": "0xdd313633...",
+          "color": "#64748b",
+          "size": 24,
+          "labels": [],
+          "stats": {
+            "in_count": 0,
+            "out_count": 24,
+            "tokens": [
+              "DBB"
+            ],
+            "lifetime": 654862
+          }
+        },
+        {
+          "id": "0xd5b3773e232adc61e88cf44682354ed997ec79fa",
+          "name": "0xd5b3773e...",
+          "color": "#64748b",
+          "size": 24,
+          "labels": [],
+          "stats": {
+            "in_count": 13,
+            "out_count": 11,
+            "tokens": [
+              "DAI"
+            ],
+            "lifetime": 283743
+          }
+        },
+        {
+          "id": "0xe20fcdd7b52e7ca1532c00065048094eec020557",
+          "name": "0xe20fcdd7...",
+          "color": "#64748b",
+          "size": 23,
+          "labels": [],
+          "stats": {
+            "in_count": 23,
+            "out_count": 0,
+            "tokens": [
+              "CASH"
+            ],
+            "lifetime": 5345
+          }
+        },
+        {
+          "id": "0x4df9500a02d64dcff99562ad128432832bac29a4",
+          "name": "0x4df9500a...",
+          "color": "#64748b",
+          "size": 23,
+          "labels": [],
+          "stats": {
+            "in_count": 23,
+            "out_count": 0,
+            "tokens": [],
+            "lifetime": 5540603
+          }
+        },
+        {
+          "id": "0x6f1e7c18528d325992e4e900dfaecb7a81c4d7ab",
+          "name": "0x6f1e7c18...",
+          "color": "#64748b",
+          "size": 23,
+          "labels": [],
+          "stats": {
+            "in_count": 23,
+            "out_count": 0,
+            "tokens": [
+              "Shell"
+            ],
+            "lifetime": 411170
+          }
+        },
+        {
+          "id": "0x36dc940ca7e9cc4513a0ded69f11a106ae0cc432",
+          "name": "0x36dc940c...",
+          "color": "#64748b",
+          "size": 23,
+          "labels": [],
+          "stats": {
+            "in_count": 23,
+            "out_count": 0,
+            "tokens": [
+              "LDS"
+            ],
+            "lifetime": 905221
+          }
+        },
+        {
+          "id": "0x71171dd621352260edb11525c8b657fd75517c77",
+          "name": "0x71171dd6...",
+          "color": "#64748b",
+          "size": 23,
+          "labels": [],
+          "stats": {
+            "in_count": 23,
+            "out_count": 0,
+            "tokens": [],
+            "lifetime": 65879
+          }
+        },
+        {
+          "id": "0x2ad5004c60e16e54d5007c80ce329adde5b51ef5",
+          "name": "0x2ad5004c...",
+          "color": "#64748b",
+          "size": 23,
+          "labels": [],
+          "stats": {
+            "in_count": 0,
+            "out_count": 23,
+            "tokens": [
+              "DAI",
+              "1INCH",
+              "USDC",
+              "USDT"
+            ],
+            "lifetime": 8463744
+          }
+        },
+        {
+          "id": "0x524215bfb9f86182f89fc5671ccbbba7f947a7a4",
+          "name": "0x524215bf...",
+          "color": "#64748b",
+          "size": 22,
+          "labels": [],
+          "stats": {
+            "in_count": 22,
+            "out_count": 0,
+            "tokens": [
+              "CASH"
+            ],
+            "lifetime": 5462
+          }
+        },
+        {
+          "id": "0x82a6a22d68ffba4057d5b49f93de5c05e4416bd1",
+          "name": "0x82a6a22d...",
+          "color": "#64748b",
+          "size": 22,
+          "labels": [],
+          "stats": {
+            "in_count": 22,
+            "out_count": 0,
+            "tokens": [],
+            "lifetime": 1363941
+          }
+        },
+        {
+          "id": "0xc6c8d7ab2f09c7f61589eff6ad2d819a7dcd6e8a",
+          "name": "0xc6c8d7ab...",
+          "color": "#64748b",
+          "size": 22,
+          "labels": [],
+          "stats": {
+            "in_count": 22,
+            "out_count": 0,
+            "tokens": [
+              "AMIO"
+            ],
+            "lifetime": 100836
+          }
+        },
+        {
+          "id": "0x26aad2da94c59524ac0d93f6d6cbf9071d7086f2",
+          "name": "0x26aad2da...",
+          "color": "#64748b",
+          "size": 22,
+          "labels": [],
+          "stats": {
+            "in_count": 11,
+            "out_count": 11,
+            "tokens": [
+              "WETH",
+              "1INCH"
+            ],
+            "lifetime": 151258087
+          }
+        },
+        {
+          "id": "0xc40d16476380e4037e6b1a2594caf6a6cc8da967",
+          "name": "0xc40d1647...",
+          "color": "#64748b",
+          "size": 22,
+          "labels": [],
+          "stats": {
+            "in_count": 7,
+            "out_count": 15,
+            "tokens": [
+              "WETH"
+            ],
+            "lifetime": 14249268
+          }
+        },
+        {
+          "id": "0x006922cf75094708c691d06818034d89aeb23ca0",
+          "name": "0x006922cf...",
+          "color": "#64748b",
+          "size": 21,
+          "labels": [],
+          "stats": {
+            "in_count": 9,
+            "out_count": 12,
+            "tokens": [],
+            "lifetime": 116067838
+          }
+        },
+        {
+          "id": "0x52e28a1c493452a58d2f40952f4bb00ceb06cd2b",
+          "name": "0x52e28a1c...",
+          "color": "#64748b",
+          "size": 21,
+          "labels": [],
+          "stats": {
+            "in_count": 3,
+            "out_count": 18,
+            "tokens": [
+              "DBB"
+            ],
+            "lifetime": 823225
+          }
+        },
+        {
+          "id": "0x19b243d002175167c616de17066ec3e114f20568",
+          "name": "0x19b243d0...",
+          "color": "#64748b",
+          "size": 21,
+          "labels": [],
+          "stats": {
+            "in_count": 20,
+            "out_count": 1,
+            "tokens": [
+              "1INCH"
+            ],
+            "lifetime": 54253800
+          }
+        },
+        {
+          "id": "0x6e90ae41af1dea6f0006aa7752d9db2cf5e6a49f",
+          "name": "0x6e90ae41...",
+          "color": "#64748b",
+          "size": 21,
+          "labels": [],
+          "stats": {
+            "in_count": 6,
+            "out_count": 15,
+            "tokens": [
+              "FTM"
+            ],
+            "lifetime": 459827
+          }
+        },
+        {
+          "id": "0xb8014a465fac459e1bfa210f5b2ff7f1f12c8b49",
+          "name": "0xb8014a46...",
+          "color": "#64748b",
+          "size": 20,
+          "labels": [],
+          "stats": {
+            "in_count": 0,
+            "out_count": 20,
+            "tokens": [
+              "CAD Coin",
+              "HGS"
+            ],
+            "lifetime": 4758315
+          }
+        },
+        {
+          "id": "0xbc9ab25bebf36c13047959099124ce3818ea0ff8",
+          "name": "0xbc9ab25b...",
+          "color": "#64748b",
+          "size": 20,
+          "labels": [],
+          "stats": {
+            "in_count": 0,
+            "out_count": 20,
+            "tokens": [
+              "HGS",
+              "LDS"
+            ],
+            "lifetime": 5348164
+          }
+        },
+        {
+          "id": "0x521a0d4917b1dec2c21b4807a3dd41c5325aa637",
+          "name": "0x521a0d49...",
+          "color": "#64748b",
+          "size": 20,
+          "labels": [],
+          "stats": {
+            "in_count": 20,
+            "out_count": 0,
+            "tokens": [],
+            "lifetime": 1750568
+          }
+        },
+        {
+          "id": "0x7b6b7a97e99d599d70ab28879d9703cf2227889d",
+          "name": "0x7b6b7a97...",
+          "color": "#64748b",
+          "size": 20,
+          "labels": [],
+          "stats": {
+            "in_count": 0,
+            "out_count": 20,
+            "tokens": [
+              "DBB"
+            ],
+            "lifetime": 599809
+          }
+        },
+        {
+          "id": "0x891c9f0bffc643041a8a07e965fb766372fe38dd",
+          "name": "0x891c9f0b...",
+          "color": "#64748b",
+          "size": 20,
+          "labels": [],
+          "stats": {
+            "in_count": 0,
+            "out_count": 20,
+            "tokens": [
+              "DBB"
+            ],
+            "lifetime": 523600
+          }
+        },
+        {
+          "id": "0x0000000000000eb4ec62758aae93400b3e5f7f18",
+          "name": "0x00000000...",
+          "color": "#64748b",
+          "size": 20,
+          "labels": [],
+          "stats": {
+            "in_count": 14,
+            "out_count": 6,
+            "tokens": [
+              "WETH",
+              "FTM"
+            ],
+            "lifetime": 2229095
+          }
+        },
+        {
+          "id": "0xd5791e1b4f918421339186ab42798077590f9c9e",
+          "name": "0xd5791e1b...",
+          "color": "#64748b",
+          "size": 20,
+          "labels": [],
+          "stats": {
+            "in_count": 9,
+            "out_count": 11,
+            "tokens": [
+              "WETH"
+            ],
+            "lifetime": 412194
+          }
+        },
+        {
+          "id": "0x0000000000005117dd3a72e64a705198753fdd54",
+          "name": "0x00000000...",
+          "color": "#64748b",
+          "size": 20,
+          "labels": [],
+          "stats": {
+            "in_count": 10,
+            "out_count": 10,
+            "tokens": [
+              "WETH",
+              "FTM"
+            ],
+            "lifetime": 2187328
+          }
+        },
+        {
+          "id": "0xac7e32eb5cec7eb7b6b43a305b64d1d3487b97a0",
+          "name": "0xac7e32eb...",
+          "color": "#64748b",
+          "size": 20,
+          "labels": [],
+          "stats": {
+            "in_count": 10,
+            "out_count": 10,
+            "tokens": [
+              "WETH",
+              "FTM"
+            ],
+            "lifetime": 709107
+          }
+        },
+        {
+          "id": "0xe21995754de1802f766d0fe4c727451db4e418aa",
+          "name": "0xe2199575...",
+          "color": "#64748b",
+          "size": 20,
+          "labels": [],
+          "stats": {
+            "in_count": 9,
+            "out_count": 11,
+            "tokens": [
+              "WETH"
+            ],
+            "lifetime": 485124
+          }
+        },
+        {
+          "id": "0xef3375b491cff653eaf7c9955a5466f7ea06f37b",
+          "name": "0xef3375b4...",
+          "color": "#64748b",
+          "size": 20,
+          "labels": [],
+          "stats": {
+            "in_count": 3,
+            "out_count": 17,
+            "tokens": [
+              "FTM"
+            ],
+            "lifetime": 462156
+          }
+        },
+        {
+          "id": "0x501b1642437c02dce51c27832273b9e4faf9587c",
+          "name": "0x501b1642...",
+          "color": "#64748b",
+          "size": 20,
+          "labels": [],
+          "stats": {
+            "in_count": 6,
+            "out_count": 14,
+            "tokens": [
+              "DAI",
+              "SLP"
+            ],
+            "lifetime": 269641
+          }
+        },
+        {
+          "id": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+          "name": "0xc02aaa39...",
+          "color": "#64748b",
+          "size": 19,
+          "labels": [],
+          "stats": {
+            "in_count": 17,
+            "out_count": 2,
+            "tokens": [
+              "$ ETH35.com - Visit to claim bonus rewards"
+            ],
+            "lifetime": 116573342
+          }
+        },
+        {
+          "id": "0x7a250d5630b4cf539739df2c5dacb4c659f2488d",
+          "name": "0x7a250d56...",
+          "color": "#64748b",
+          "size": 19,
+          "labels": [],
+          "stats": {
+            "in_count": 12,
+            "out_count": 7,
+            "tokens": [],
+            "lifetime": 2746571
+          }
+        },
+        {
+          "id": "0x0883b18403dd527c108fc78e9755f378c648cc8a",
+          "name": "0x0883b184...",
+          "color": "#64748b",
+          "size": 19,
+          "labels": [],
+          "stats": {
+            "in_count": 0,
+            "out_count": 19,
+            "tokens": [
+              "DAI",
+              "SLP"
+            ],
+            "lifetime": 1563947
+          }
+        },
+        {
+          "id": "0x65e31eb5d4b521dbbdcb0868e810b60d23533550",
+          "name": "0x65e31eb5...",
+          "color": "#64748b",
+          "size": 19,
+          "labels": [],
+          "stats": {
+            "in_count": 0,
+            "out_count": 19,
+            "tokens": [],
+            "lifetime": 23568
+          }
+        },
+        {
+          "id": "0x6b7691b517b597eab9bff03380f27548d9cfccea",
+          "name": "0x6b7691b5...",
+          "color": "#64748b",
+          "size": 19,
+          "labels": [],
+          "stats": {
+            "in_count": 17,
+            "out_count": 2,
+            "tokens": [
+              "1INCH",
+              "GAGA",
+              "USDC",
+              "USDT",
+              "WETH"
+            ],
+            "lifetime": 73267908
+          }
+        },
+        {
+          "id": "0xe00a182284098e9c2ba89634544d51b0179c4c92",
+          "name": "0xe00a1822...",
+          "color": "#64748b",
+          "size": 18,
+          "labels": [],
+          "stats": {
+            "in_count": 18,
+            "out_count": 0,
+            "tokens": [
+              "CASH"
+            ],
+            "lifetime": 10392
+          }
+        }
+      ],
+      "edges": [
+        {
+          "source": "0x0000000000000000000000000000000000000000",
+          "target": "0x00c839ecbded01790d35885a639589e1f75f6318",
+          "value": 704309156838,
+          "type": "TKC"
+        },
+        {
+          "source": "0x0000000000000000000000000000000000000000",
+          "target": "0x00c839ecbded01790d35885a639589e1f75f6318",
+          "value": 200000000000000000000000,
+          "type": "FALCON"
+        },
+        {
+          "source": "0x0000000000000000000000000000000000000000",
+          "target": "0x00c839ecbded01790d35885a639589e1f75f6318",
+          "value": 668581814115,
+          "type": "SLT"
+        },
+        {
+          "source": "0x006922cf75094708c691d06818034d89aeb23ca0",
+          "target": "0x00c839ecbded01790d35885a639589e1f75f6318",
+          "value": 2000000000000000000,
+          "type": "ETH"
+        },
+        {
+          "source": "0x00c839ecbded01790d35885a639589e1f75f6318",
+          "target": "0x006922cf75094708c691d06818034d89aeb23ca0",
+          "value": 1000000000000000000,
+          "type": "ETH"
+        },
+        {
+          "source": "0x00c839ecbded01790d35885a639589e1f75f6318",
+          "target": "0x006922cf75094708c691d06818034d89aeb23ca0",
+          "value": 100000000000000000,
+          "type": "ETH"
+        },
+        {
+          "source": "0x00c839ecbded01790d35885a639589e1f75f6318",
+          "target": "0x006922cf75094708c691d06818034d89aeb23ca0",
+          "value": 1000000000000000000,
+          "type": "ETH"
+        },
+        {
+          "source": "0x006922cf75094708c691d06818034d89aeb23ca0",
+          "target": "0x00c839ecbded01790d35885a639589e1f75f6318",
+          "value": 1000000000000000000,
+          "type": "ETH"
+        }
+      ],
+      "stats": {
+        "total_nodes": 60816,
+        "total_edges": 101251,
+        "shown_nodes": 200,
+        "shown_edges": 8
+      }
+    }
+  },
+  "detectors": {
+    "blacklist": {
+      "detected": true,
+      "severity": "CRITICAL",
+      "hits": [
+        {
+          "address": "0x098b716b8aaf21512996dc57eb0615e2383e2f96",
+          "type": "BLACKLIST",
+          "label": "Lazarus — Ronin Bridge Hack",
+          "severity": "CRITICAL"
+        },
+        {
+          "address": "0x99c9fc46f92e8a1c0dec1b1747d010903e884be1",
+          "type": "BRIDGE",
+          "label": "Optimism Bridge",
+          "severity": "LOW"
+        },
+        {
+          "address": "0xa160cdab225685da1d56aa342ad8841c3b53f291",
+          "type": "BLACKLIST",
+          "label": "Tornado Cash — 100 ETH Pool (OFAC)",
+          "severity": "CRITICAL"
+        },
+        {
+          "address": "0xa0e1c89ef1a489c9c7de96311ed5ce5d32c20e4b",
+          "type": "BLACKLIST",
+          "label": "Lazarus Group (OFAC SDN)",
+          "severity": "CRITICAL"
+        },
+        {
+          "address": "0x99739fa525c0a98384430235d278fd08938997f9",
+          "type": "BLACKLIST",
+          "label": "Lazarus — Dust Collector 997",
+          "severity": "CRITICAL"
+        }
+      ],
+      "summary": "命中 5 个已知风险地址"
+    },
+    "peel_chain": {
+      "detected": false
+    },
+    "smurfing": {
+      "detected": true,
+      "severity": "MEDIUM",
+      "pattern_count": 121,
+      "patterns": [
+        {
+          "sender": "0x098b716b8aaf21512996dc57eb0615e2383e2f96",
+          "amount": 9000000000000000000,
+          "frequency": 805,
+          "regular": false,
+          "avg_interval": 14855,
+          "targets": [
+            "0x124f580df032fb7ae3ff7c6fa1f0873d10ea1872",
+            "0x1640cc380bc9edcb6f652645e07705cca91e9eea",
+            "0x56c705200635590e90e9b0876dff9e3c3d1b4b22",
+            "0x4dc8eb032540c014fbf15daf9d99e7f41e911d03",
+            "0x77141711357ab03d4a1af15cc5ac3b9dd6c11ca1"
+          ],
+          "multi_dest": true,
+          "severity": "MEDIUM"
+        },
+        {
+          "sender": "0x098b716b8aaf21512996dc57eb0615e2383e2f96",
+          "amount": 1000000000000000000,
+          "frequency": 522,
+          "regular": false,
+          "avg_interval": 23972,
+          "targets": [
+            "0x665660f65e94454a64b96693a67a41d440155617",
+            "0xe708f17240732bbfa1baa8513f66b665fbc7ce10",
+            "0x80c5e6908368cb9db503ba968d7ec5a565bfb389",
+            "0x5e7c4e64d145085b0d0f131a91987c76e481f5cd"
+          ],
+          "multi_dest": true,
+          "severity": "MEDIUM"
+        },
+        {
+          "sender": "0xdf20ac5527567817770efd1e51e7e85669a74d2d",
+          "amount": 40008000000000000000000,
+          "frequency": 446,
+          "regular": false,
+          "avg_interval": 3725,
+          "targets": [
+            "0x0e26a21013f2f8c0362cfae608b4e69a249d5efc"
+          ],
+          "multi_dest": false,
+          "severity": "MEDIUM"
+        },
+        {
+          "sender": "0x00c839ecbded01790d35885a639589e1f75f6318",
+          "amount": 400000000000000,
+          "frequency": 422,
+          "regular": false,
+          "avg_interval": 91,
+          "targets": [
+            "0xc2dd44daa6737d40a3e459c53358a877f9123720",
+            "0xe9fc3ae9afa4adf35ec0bf69ac1a9dade21d11e6",
+            "0xb15a92f40269f06ca23d960ae59147edf974697f",
+            "0x894be28916f1a46fa2b64e3f53c31b3755c1f0a2",
+            "0xe2f7033c2b9c76941a209ac6491f7138d3047646"
+          ],
+          "multi_dest": true,
+          "severity": "MEDIUM"
+        },
+        {
+          "sender": "0x00c839ecbded01790d35885a639589e1f75f6318",
+          "amount": 500000000000000,
+          "frequency": 398,
+          "regular": false,
+          "avg_interval": 31,
+          "targets": [
+            "0x9785c3b2e11972b0a8cd8133c58684cee2a9e5bc",
+            "0x036d3d8aeadaa73a05183138753961b38fdbf759",
+            "0xdeb02ec0a872a0eda92778b404dc77f2882c5232",
+            "0x78e749b116582f890b21701eaadea5090304d2ee",
+            "0x593cb1fa677830c6572caae711bbd3fc3cfd2679"
+          ],
+          "multi_dest": true,
+          "severity": "MEDIUM"
+        }
+      ],
+      "summary": "检测到 121 个拆单模式，最高频次 805 次"
+    },
+    "fanout": {
+      "detected": true,
+      "severity": "MEDIUM",
+      "hub_count": 1,
+      "hubs": [
+        {
+          "address": "0x2869eb22608164a3b5b145ca9d356202dc4d80e8",
+          "in_count": 8,
+          "out_count": 7,
+          "lifetime": 1893,
+          "sources": [
+            "0x91d76d31080ca88339a4e506affb4ded4b192bcb"
+          ],
+          "targets": [
+            "0x084b1c3c81545d370f3634392de611caabff8148",
+            "0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e",
+            "0x098b716b8aaf21512996dc57eb0615e2383e2f96",
+            "0x4976fb03c32e5b8cfe2b6ccb31c09ba78ebaba41"
+          ],
+          "simultaneous_activation": false,
+          "severity": "MEDIUM"
+        }
+      ],
+      "summary": "检测到 1 个蜘蛛网中转节点"
+    },
+    "bipartite": {
+      "detected": true,
+      "severity": "HIGH",
+      "pattern_count": 216,
+      "patterns": [
+        {
+          "timestamp": 1668180540,
+          "group_addrs": [
+            "0x33f895dce363cf3c33b658992a104f85c48b79cb",
+            "0x48fb0e65cb77d679a36b25742d95cf5a9a807ccc",
+            "0x91f7bf2877bc1b31558e638b02ad09beab40022d",
+            "0xa5884f386cc3de821322abea3ac50c9290c286d9",
+            "0x9e1899d2dc72b24eb4250d35c8fa1bd4e94461d1"
+          ],
+          "group_size": 21,
+          "external_out": 17,
+          "external_in": 6,
+          "bidirectional": [
+            "0xcbffcb2c38ecd19468d366d392ac0c1dc7f04bb6"
+          ],
+          "severity": "HIGH"
+        },
+        {
+          "timestamp": 1527879480,
+          "group_addrs": [
+            "0xc0eded3e85bfd973747592145154c7bd36ea83c9",
+            "0x7bc0ff9c46a8074f734a5353207fbd8116aa1107",
+            "0x2ca5d0076031d799119285960bc171ee5e2edd83",
+            "0x32a5c971a1451e3734f233b34d916ce6795360a8",
+            "0x5bd158bab5c844910ca85b28a2a94535074b28d2"
+          ],
+          "group_size": 16,
+          "external_out": 16,
+          "external_in": 16,
+          "bidirectional": [
+            "0x00c839ecbded01790d35885a639589e1f75f6318"
+          ],
+          "severity": "HIGH"
+        },
+        {
+          "timestamp": 1527880320,
+          "group_addrs": [
+            "0x08180514ac7ef895e0b40ce477174a084ee0609c",
+            "0xa2e7d5c20313bd7681ab8f9d6fdcca71b2fccf1e",
+            "0xb15a92f40269f06ca23d960ae59147edf974697f",
+            "0xa85a54dafb3ed3d3345a15af0c5e9015861945f2",
+            "0xbcd780c5a20fcaa9da82117c545657ee6344c006"
+          ],
+          "group_size": 16,
+          "external_out": 16,
+          "external_in": 16,
+          "bidirectional": [
+            "0x00c839ecbded01790d35885a639589e1f75f6318"
+          ],
+          "severity": "HIGH"
+        }
+      ],
+      "summary": "检测到 216 个二分图模式"
+    },
+    "mixer": {
+      "detected": true,
+      "severity": "HIGH",
+      "results": {
+        "mixer_interactions": {
+          "detected": true,
+          "count": 1,
+          "hits": [
+            {
+              "direction": "withdraw",
+              "mixer": "0xa160cdab225685da1d56aa342ad8841c3b53f291",
+              "label": "Tornado Cash 100 ETH",
+              "to": "0x00c839ecbded01790d35885a639589e1f75f6318",
+              "value": 99594418500000000000,
+              "ts": 1657463395
+            }
+          ]
+        },
+        "gas_funding": {
+          "detected": false
+        }
+      },
+      "summary": "混币器交互 1 次"
+    },
+    "defi": {
+      "detected": true,
+      "severity": "MEDIUM",
+      "results": {
+        "dex_swap": {
+          "detected": true,
+          "severity": "MEDIUM",
+          "patterns": [
+            {
+              "address": "0x529dab7bad9ef1000c3c0d708878c83fc870f7ae",
+              "token_count": 10,
+              "tokens": [
+                "CAD Coin",
+                "ZRX",
+                "GNT",
+                "SNT",
+                "ZGK",
+                "OEC",
+                "CAR",
+                "BAT"
+              ],
+              "window_txs": 10
+            },
+            {
+              "address": "0x059fa08430cedc9edc185974c1b6e4e6317e4945",
+              "token_count": 8,
+              "tokens": [
+                "CAD Coin",
+                "ZRX",
+                "GNT",
+                "HDW",
+                "SNT",
+                "OEC",
+                "CAR",
+                "BAT"
+              ],
+              "window_txs": 8
+            },
+            {
+              "address": "0xe3567deb8e6eafc22fb6088073763e6ce3d3084c",
+              "token_count": 10,
+              "tokens": [
+                "CAD Coin",
+                "OMG",
+                "ZRX",
+                "GNT",
+                "GHP",
+                "OEC",
+                "CAR",
+                "RREX"
+              ],
+              "window_txs": 10
+            }
+          ],
+          "summary": "7 个地址在1小时内频繁换币"
+        },
+        "rapid_lp": {
+          "detected": true,
+          "severity": "MEDIUM",
+          "incidents": [
+            {
+              "address": "0x098b716b8aaf21512996dc57eb0615e2383e2f96",
+              "contract": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+              "held_secs": 1429
+            },
+            {
+              "address": "0x098b716b8aaf21512996dc57eb0615e2383e2f96",
+              "contract": "0xe00a182284098e9c2ba89634544d51b0179c4c92",
+              "held_secs": 18
+            },
+            {
+              "address": "0x098b716b8aaf21512996dc57eb0615e2383e2f96",
+              "contract": "0xeea2fef22353282fb760d27ea7a1e2f06b3f442d",
+              "held_secs": 216
+            }
+          ],
+          "summary": "15214 次极短时间 LP 存取"
+        },
+        "flash_loan": {
+          "detected": true,
+          "severity": "MEDIUM",
+          "hits": [
+            {
+              "contract": "0x87870bca3f3fd6335c3f4ce8392d69350b4fa4e2",
+              "label": "Aave V3 Pool"
+            }
+          ],
+          "summary": "与 1 个闪电贷合约交互"
+        },
+        "yield_farm": {
+          "detected": true,
+          "severity": "MEDIUM",
+          "hits": [
+            {
+              "protocol": "0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9",
+              "label": "Aave Token"
+            }
+          ],
+          "repeated": {},
+          "summary": "与 1 个 Yield 协议交互"
+        }
+      },
+      "detected_types": [
+        "dex_swap",
+        "rapid_lp",
+        "flash_loan",
+        "yield_farm"
+      ],
+      "summary": "DeFi 滥用：dex_swap, rapid_lp, flash_loan, yield_farm"
+    },
+    "nft": {
+      "detected": true,
+      "severity": "HIGH",
+      "results": {
+        "wash_trading": {
+          "detected": true,
+          "severity": "HIGH",
+          "pairs": [
+            {
+              "pair": [
+                "0xc3d03e4f041fd4cd388c549ee2a29a9e5075882f",
+                "0xd9e1ce17f2641f24ae83637ab66a2cca9c378b9f"
+              ],
+              "count": 3081
+            },
+            {
+              "pair": [
+                "0x0e26a21013f2f8c0362cfae608b4e69a249d5efc",
+                "0xd9e1ce17f2641f24ae83637ab66a2cca9c378b9f"
+              ],
+              "count": 2486
+            },
+            {
+              "pair": [
+                "0x529dab7bad9ef1000c3c0d708878c83fc870f7ae",
+                "0x709840a3cbf76f6e502703aebeb8eb57bfbf0a5f"
+              ],
+              "count": 2073
+            },
+            {
+              "pair": [
+                "0x529dab7bad9ef1000c3c0d708878c83fc870f7ae",
+                "0x976010db5538f0c1daf9f3855b8504721a23e5d4"
+              ],
+              "count": 1948
+            },
+            {
+              "pair": [
+                "0x0e26a21013f2f8c0362cfae608b4e69a249d5efc",
+                "0xdf20ac5527567817770efd1e51e7e85669a74d2d"
+              ],
+              "count": 1326
+            }
+          ],
+          "nft_markets": [
+            "0x000000000000ad05ccc4f10045630fb830b95127",
+            "0x00000000006c3852cbef3e08e8df289169ede581"
+          ],
+          "summary": "3469 对地址存在反复来回交易"
+        },
+        "value_inject": {
+          "detected": true,
+          "severity": "MEDIUM",
+          "outliers": [
+            {
+              "from": "0xe08b37fcf2a3f85124d35148a3b3c66fdbbbc7d4",
+              "to": "0x2936e27266f9507b575e5fa4fee480d5ea8da54b",
+              "value": 45000000000000000000000000000000,
+              "ratio": 84143.2
+            },
+            {
+              "from": "0x2936e27266f9507b575e5fa4fee480d5ea8da54b",
+              "to": "0xeec8f27bb85e34894a1c65105fe579d89b09ee4c",
+              "value": 235757446737200000000000000000,
+              "ratio": 440.8
+            },
+            {
+              "from": "0x2936e27266f9507b575e5fa4fee480d5ea8da54b",
+              "to": "0x433e0a08964e445576229312e9de6be457b5738d",
+              "value": 147348404210750000000000000000,
+              "ratio": 275.5
+            }
+          ],
+          "avg_value": 534802785546346341863522304,
+          "summary": "71 笔交易金额严重偏高"
+        }
+      },
+      "summary": "检测到 NFT 洗钱相关行为"
+    },
+    "dusting": {
+      "detected": true,
+      "severity": "HIGH",
+      "dustings": [
+        {
+          "source": "0x5a5444f6b5d511f61ff7c3152054d4030f3891ca",
+          "count": 25,
+          "total_val": 7500000000000000,
+          "txs": [
+            {
+              "value": 300000000000000,
+              "ts": 1648572673,
+              "type": "ETH"
+            },
+            {
+              "value": 300000000000000,
+              "ts": 1648572738,
+              "type": "ETH"
+            },
+            {
+              "value": 300000000000000,
+              "ts": 1648572772,
+              "type": "ETH"
+            }
+          ]
+        }
+      ],
+      "merged": true,
+      "total_dust_tx": 25,
+      "summary": "检测到 1 个尘埃攻击来源，已发生归并操作（高风险）"
+    },
+    "pig_butchering": {
+      "detected": true,
+      "severity": "MEDIUM",
+      "stages": {
+        "stage1_bait": {
+          "from": "0x514ab089938c7bf03f83420751b0da148220590d",
+          "value": 0,
+          "ts": 1648570252
+        },
+        "stage2_invest": {
+          "tx_count": 1373,
+          "total_val": 20296712216734939651303396,
+          "increasing": true
+        },
+        "stage3_collect": {
+          "target": "0x8125e2ad98379f99d20f92140acbcebbb4c24fb4",
+          "tx_count": 1,
+          "total_val": 20000000000000000000000000
+        }
+      },
+      "summary": "猪杀盘疑似三段式：诱饵 0 → 递增出账 → 归集至 0x8125e2ad98..."
+    },
+    "reverse_taint": {
+      "detected": true,
+      "severity": "HIGH",
+      "active_count": 3,
+      "passive_count": 2,
+      "active": [
+        {
+          "direction": "sent_to_blacklist",
+          "target": "0x098b716b8aaf21512996dc57eb0615e2383e2f96",
+          "label": "Lazarus — Ronin Bridge Hack",
+          "value": 9000000000000000000,
+          "ts": 1648689663,
+          "type": "CASH"
+        },
+        {
+          "direction": "sent_to_blacklist",
+          "target": "0xa0e1c89ef1a489c9c7de96311ed5ce5d32c20e4b",
+          "label": "Lazarus Group (OFAC SDN)",
+          "value": 18256810000000000000000,
+          "ts": 1650334529,
+          "type": "ETH"
+        },
+        {
+          "direction": "sent_to_blacklist",
+          "target": "0x098b716b8aaf21512996dc57eb0615e2383e2f96",
+          "label": "Lazarus — Ronin Bridge Hack",
+          "value": 0,
+          "ts": 1679534783,
+          "type": "WETH"
+        }
+      ],
+      "passive": [
+        {
+          "direction": "received_from_blacklist",
+          "source": "0x098b716b8aaf21512996dc57eb0615e2383e2f96",
+          "label": "Lazarus — Ronin Bridge Hack",
+          "value": 9000000000000000000,
+          "ts": 1648689663,
+          "type": "CASH",
+          "note": "可能是反向污染攻击，需人工核查"
+        },
+        {
+          "direction": "received_from_blacklist",
+          "source": "0x098b716b8aaf21512996dc57eb0615e2383e2f96",
+          "label": "Lazarus — Ronin Bridge Hack",
+          "value": 0,
+          "ts": 1679534783,
+          "type": "WETH",
+          "note": "可能是反向污染攻击，需人工核查"
+        }
+      ],
+      "summary": "主动交互黑名单 3 次 | 被动收款自黑名单 2 次"
+    },
+    "pagerank": {
+      "detected": true,
+      "severity": "HIGH",
+      "target_score": 1.0,
+      "top_risk_nodes": [
+        {
+          "address": "0x03dfb2340c59972065112ba39e296083257c5f6d",
+          "score": 1.0
+        },
+        {
+          "address": "0x098b716b8aaf21512996dc57eb0615e2383e2f96",
+          "score": 1.0
+        },
+        {
+          "address": "0x529dab7bad9ef1000c3c0d708878c83fc870f7ae",
+          "score": 1.0
+        },
+        {
+          "address": "0x0000000000000000000000000000000000000000",
+          "score": 1.0
+        },
+        {
+          "address": "0xd3953297a35445eac0bdf4947584d6d9c7149f74",
+          "score": 1.0
+        },
+        {
+          "address": "0x00c839ecbded01790d35885a639589e1f75f6318",
+          "score": 1.0
+        },
+        {
+          "address": "0x12d27ac8596dd14d7ea400cd9e7745f89f94f64a",
+          "score": 1.0
+        },
+        {
+          "address": "0x9785c3b2e11972b0a8cd8133c58684cee2a9e5bc",
+          "score": 1.0
+        },
+        {
+          "address": "0x004722148dd8bd42ce69c130a1d6c049910aea0b",
+          "score": 1.0
+        },
+        {
+          "address": "0x74de5d4fcbf63e00296fd95d33236b9794016631",
+          "score": 1.0
+        }
+      ],
+      "summary": "PageRank 风险分: 1.0，高风险节点: 10 个"
+    },
+    "lof": {
+      "detected": false
+    }
+  },
+  "tokens": {
+    "USDT": 10226,
+    "KIP": 10001,
+    "VGS": 9481,
+    "WETH": 9375,
+    "CASH": 8790,
+    "DBB": 5066,
+    "FTM": 5000,
+    "DAI": 4331,
+    "ETH": 1617,
+    "SLP": 1364,
+    "HGS": 1100,
+    "WECC": 422,
+    "AMIO": 419,
+    "LDS": 379,
+    "ABO": 234,
+    "B91": 220,
+    "FIND": 193,
+    "Shell": 174,
+    "1INCH": 164,
+    "CAD Coin": 139
+  }
+}
