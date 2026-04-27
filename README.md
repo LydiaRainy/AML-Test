@@ -176,4 +176,3 @@ python analyze.py 0x28c6c06298d514db089934071355e5743bf21d60 1
 ## 团队
 
 City University of Hong Kong
-Supervisor: Prof. Zhenliang Lu
