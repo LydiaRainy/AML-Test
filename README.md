@@ -1,6 +1,6 @@
 # LucidAML
 
-**可解释的区块链反洗钱检测引擎**，面向香港港元稳定币发行合规场景。
+**可解释的区块链反洗钱检测引擎**
 
 > Unlike black-box AML solutions, LucidAML provides full explainability for every risk score.
 
